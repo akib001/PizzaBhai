@@ -20,7 +20,7 @@
   
   .price {
     margin-top: 0.25rem;
-    margin-left: 2rem;
+    margin-left: 2.5rem;
     font-weight: bold;
     color: #ad5502;
     font-size: 1.25rem;
@@ -43,3 +43,30 @@
     background-color: #641e03;
     border-color: #641e03;
   }
+
+table  thead{
+    background-color: #8a2b06;
+    color: white;
+    font-weight: bold;
+
+}
+
+table tbody tr:nth-child(even) {
+    background-color: #e2c1b3;
+    border-bottom: 1px solid #d4b8ab;
+}
+
+table {
+    border-collapse: collapse;
+    border: 1px solid #d4b8ab;
+    width: 100%;
+}
+
+table th {
+    padding: .5rem;
+}
+
+table td {
+  padding: .5rem .5rem .5rem 4rem;
+
+}

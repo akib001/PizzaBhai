@@ -46,7 +46,7 @@ const OrderList = () => {
             totalPrice: data[key].totalOrderedPrice
           }))
 
-          console.log(loadedItems)
+
 
           loadedOrders.push({
             id: key,
