@@ -2,14 +2,16 @@ import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { sendCartData } from './store/cart-actions';
 import { fetchCartData } from './store/cart-actions';
-import React from 'react';
+import React, {Suspense} from 'react';
 import Layout from './components/Layout/Layout';
-import AuthPage from './pages/AuthPage'
-import AdminDashboard from './pages/AdminDashboard';
-
 import { Route, Routes } from 'react-router-dom';
 import HomePage from './pages/HomePage';
 import {Navigate} from 'react-router-dom';
+
+const AuthPage = React.lazy(() => import('./pages/AuthPage'));
+const AdminDashboard = React.lazy(() => import('./pages/AdminDashboard'));
+
+
 let runFirstTime = true;
 
 function App() {
@@ -36,11 +38,13 @@ function App() {
 
   return (
     <Layout>
-      <Routes>
+      <Suspense fallback={<p>Loading..</p>}>
+        <Routes>
         <Route path="/" element={<HomePage />}/>
         <Route path="/auth" element={<AuthPage></AuthPage>}/>
         <Route path="/admin" element={isLoggedIn ? <AdminDashboard/> : <Navigate to={'/auth'} />}/>
       </Routes>
+      </Suspense>      
     </Layout>
   );
 }
