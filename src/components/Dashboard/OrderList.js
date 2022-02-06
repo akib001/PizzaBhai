@@ -2,8 +2,12 @@ import Card from '../UI/Card';
 import classes from './OrderList.module.css';
 import Order from './Order';
 import { useState, useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+import { authActions } from '../../store/auth-slice';
 
 const OrderList = () => {
+  const dispatch = useDispatch();
+
   const [orders, setOrders] = useState([]);
   const [isError, setIsError] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
@@ -31,11 +35,18 @@ const OrderList = () => {
           for (const itemKey in data[key].orderData) {
             loadedItems.push({
               itemId: itemKey,
-              itemName: data[key].orderData[itemKey].name,
+              itemName: data[key].orderData[itemKey].title,
               itemPrice: data[key].orderData[itemKey].price,
-              itemAmount: data[key].orderData[itemKey].amount,
+              itemQuantity: data[key].orderData[itemKey].quantity,
             })
           }
+
+          dispatch(authActions.calculateOrderSummary({
+            totalQuantity: data[key].totalOrderedQuantity,
+            totalPrice: data[key].totalOrderedPrice
+          }))
+
+          console.log(loadedItems)
 
           loadedOrders.push({
             id: key,
@@ -51,11 +62,9 @@ const OrderList = () => {
       setIsLoading(false);
     }
     fetchOrdersHandler();
-  }, []);
+  }, [dispatch]);
 
-  const ordersList = orders.map(order => (  
-    
-
+  const ordersList = orders.map(order => (      
     <Order
       key={order.id}
       id={order.id}

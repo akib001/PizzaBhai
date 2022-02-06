@@ -9,6 +9,7 @@ import CheckoutForm from './CheckoutForm';
 const Cart = props => {
   const dispatch = useDispatch();
   const stateTotalAmount = useSelector(state => state.cart.totalAmount)
+  const stateTotalQuantity = useSelector(state => state.cart.totalQuantity)
   const stateItems = useSelector(state => state.cart.items)
   const [isCheckout, setIsCheckout] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
@@ -38,6 +39,8 @@ const Cart = props => {
         body: JSON.stringify({
           userData: data,
           orderData: stateItems,
+          totalOrderedPrice: stateTotalAmount,
+          totalOrderedQuantity: stateTotalQuantity
         }),
       }
     );

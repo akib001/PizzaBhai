@@ -6,8 +6,8 @@ const initialState = {
   token: initialToken,
   isLoggedIn: false,
   error: '',
+  totalOrderedQuantity: 0,
   totalOrderedPrice: 0,
-  totalOrderedAmount: 0
 };
 
 const authSlice = createSlice({
@@ -19,28 +19,25 @@ const authSlice = createSlice({
     },
 
     login(state, action) {
-        state.token = action.payload;
-        localStorage.setItem('token', state.token);
+      state.token = action.payload;
+      localStorage.setItem('token', state.token);
     },
 
     logout(state) {
-        state.token = '';
-        localStorage.removeItem('token');
-        state.totalOrderedPrice= 0;
-        state.totalOrderedAmount= 0;
+      state.token = '';
+      localStorage.removeItem('token');
+      state.totalOrderedQuantity = 0;
+      state.totalOrderedPrice = 0;
     },
 
     setError(state, action) {
-        state.error = action.payload;
+      state.error = action.payload;
     },
 
-    calculateTotalOrders(state, action) {
-      state.totalOrderedPrice += action.payload;
+    calculateOrderSummary(state, action) {
+      state.totalOrderedQuantity += action.payload.totalQuantity;
+      state.totalOrderedPrice += action.payload.totalPrice;
     },
-
-    calculateTotalOrderedAmount(state, action) {
-      state.totalOrderedAmount += action.payload;
-    }
   },
 });
 

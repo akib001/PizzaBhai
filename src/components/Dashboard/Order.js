@@ -1,19 +1,15 @@
 import classes from './Order.module.css';
-import { useDispatch } from 'react-redux';
-import { authActions } from '../../store/auth-slice';
 
 const Order = (props) => {
-    const dispatch = useDispatch();
+
     const cartItems = props.items;
 
     let totalPrice = 0;
     let totalQuantity = 0;
 
     for (const key in cartItems) {
-      totalPrice += (cartItems[key].itemPrice * cartItems[key].itemAmount);
-      totalQuantity += cartItems[key].itemAmount;
-      dispatch(authActions.calculateTotalOrders(totalPrice));
-      dispatch(authActions.calculateTotalOrderedAmount(totalQuantity));
+      totalPrice += (cartItems[key].itemPrice * cartItems[key].itemQuantity);
+      totalQuantity += cartItems[key].itemQuantity;
     }
 
    
