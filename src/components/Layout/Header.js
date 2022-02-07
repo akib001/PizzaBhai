@@ -52,10 +52,13 @@ const Header = props => {
           <h1 onClick={homeHandler}>ReactMeals</h1>
         )}
         {buttonContent}
-        <HeaderCartButton
+        {pathname !== '/admin' &&
+          <HeaderCartButton
           className={classes.headerButton}
           onClick={props.onShowCart}
         />
+        }
+        
       </header>
       <div className={classes['main-image']}>
         <img src={mealsImage} alt="A table full of delicious food!" />
