@@ -27,9 +27,6 @@ const AuthForm = () => {
 
     signInWithGoogle()
       .then(result => {
-        console.log(result._tokenResponse.idToken);
-
-        console.log(result);
         // const expirationTime = new Date(
         //   new Date().getTime() + +result._tokenResponse.expiresIn * 1000
         // );
