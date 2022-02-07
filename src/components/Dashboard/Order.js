@@ -24,11 +24,11 @@ const Order = props => {
 
   const itemsRow = cartItems.map(cartItem => (
     <tr key={cartItem.itemId}>
-      <td>{cartItem.itemId}</td>
-      <td>{cartItem.itemName}</td>
-      <td>{cartItem.itemPrice}</td>
-      <td>{cartItem.itemQuantity}</td>
-      <td>{cartItem.itemPrice * cartItem.itemQuantity}</td>
+      <td data-label="Item ID">{cartItem.itemId}</td>
+      <td data-label="Title">{cartItem.itemName}</td>
+      <td data-label="Price">{cartItem.itemPrice}</td>
+      <td data-label="Quantity">{cartItem.itemQuantity}</td>
+      <td data-label="Total Price">{cartItem.itemPrice * cartItem.itemQuantity}</td>
     </tr>
   ));
 
@@ -37,7 +37,7 @@ const Order = props => {
       <li className={classes.order}>
         <div>
           <h3>{props.name}</h3>
-          <div className={classes.address}>{props.street}</div>
+          <div className={classes.address}>{props.city}</div>
           <h4>
             Total Quantity: <span>{totalQuantity}</span>
           </h4>

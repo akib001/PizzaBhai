@@ -70,3 +70,64 @@ table td {
   padding: .5rem .5rem .5rem 4rem;
 
 }
+
+@media screen and (max-width: 786px) {
+  .table thead {
+    display: none;
+  }
+
+  .table, .table tbody, .table tr, .table td {
+    display: block;
+    width: 100%
+  }
+
+  table tbody td:nth-child(odd) {
+    background-color: #e2c1b3;
+    border-bottom: 1px solid #d4b8ab;
+  }
+
+  table tbody tr:nth-child(even) {
+    background-color: white;
+    border-bottom: 1px solid #d4b8ab;
+    margin-top: 1.5rem;
+    margin-bottom: 1.5rem;
+  }
+  
+
+  .table tbody tr td{
+    text-align: right;
+    padding-left: 50%;
+    position: relative;
+  }
+
+  .table td:before{
+    content: attr(data-label);
+    position: absolute;
+    left: 0;
+    width: 50%;
+    padding-left: 1rem;
+    text-align: left;
+    font-weight: bold;
+  }
+
+  .order button {
+    font: inherit;
+    cursor: pointer;
+    background-color: #8a2b06;
+    border: 1px solid #8a2b06;
+    color: white;
+    padding: 0.3rem 0.3rem;
+    border-radius: 15x;
+    font-weight:lighter;
+    margin-top: .5rem;
+    margin-left: 1.2rem;
+  }
+
+  .price {
+    margin-top: 0.25rem;
+    margin-left: 2rem;
+    font-weight: bold;
+    color: #ad5502;
+    font-size: 1.25rem;
+  }
+}

@@ -51,7 +51,7 @@ const OrderList = () => {
           loadedOrders.push({
             id: key,
             name: data[key].userData.name,
-            street: data[key].userData.street,
+            city: data[key].userData.city,
             items: loadedItems,
           });
         }
@@ -69,7 +69,7 @@ const OrderList = () => {
       key={order.id}
       id={order.id}
       name={order.name}
-      street={order.street}
+      city={order.city}
       items={order.items}
     />
   ));
