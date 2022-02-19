@@ -11,11 +11,33 @@ const Admin = () => {
     setShowAddFoodForm(true);
   };
 
+  const hideAddFoodFormHandler = (event) => {
+    setShowAddFoodForm(event);
+  }
+
+
+  const formSubmitHandler = async (submitData) => {
+
+    await fetch(
+      'https://react-http-597d3-default-rtdb.firebaseio.com/meals.json',
+      {
+        method: 'POST',
+        body: JSON.stringify({
+          title: submitData.title,
+          price: submitData.price,
+          description: submitData.description,
+        }),
+      }
+    );
+
+    console.log('Food Added');
+  };
+
   return (
     <Fragment>
       <OrderSummary />
       <button onClick={addFoodHandler}>Add New Food Item</button>
-      <AddFoodForm />
+      {showAddFoodForm && <AddFoodForm onConfirm={formSubmitHandler} onHideAddFoodFormHandler={hideAddFoodFormHandler} />}
       <OrderList />
     </Fragment>
   );

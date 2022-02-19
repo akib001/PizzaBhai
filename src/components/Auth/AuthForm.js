@@ -11,6 +11,8 @@ const AuthForm = () => {
   const enteredPasswordRef = useRef();
   const [isLogin, setIsLogin] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
+  const [resetPass, setResetPass] = useState(false);
+  
 
   const navigate = useNavigate();
 
@@ -46,21 +48,47 @@ const AuthForm = () => {
     const password = enteredPasswordRef.current.value;
     setIsLoading(true);
     let url;
+    let bodyContent;
 
-    if (isLogin) {
+    if (isLogin && error !== 'INVALID_PASSWORD') {
       url =
         'https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyAL0N1DDE5PErh_25vFihwZzgbQ2cozKYY';
-    } else {
-      url =
-        'https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyAL0N1DDE5PErh_25vFihwZzgbQ2cozKYY';
-    }
-    fetch(url, {
-      method: 'POST',
-      body: JSON.stringify({
+      bodyContent = {
         email,
         password,
         returnSecureToken: true,
-      }),
+      };
+      console.log('login');
+    }  
+
+    if (!isLogin && error !== 'INVALID_PASSWORD') {
+      url =
+        'https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyAL0N1DDE5PErh_25vFihwZzgbQ2cozKYY';
+        bodyContent = {
+          email,
+          password,
+          returnSecureToken: true,
+        };    
+        console.log('signup');
+    }
+
+
+    if (error === 'INVALID_PASSWORD') {
+      url =
+        'https://identitytoolkit.googleapis.com/v1/accounts:sendOobCode?key=AIzaSyAL0N1DDE5PErh_25vFihwZzgbQ2cozKYY';
+      bodyContent = {
+          requestType: "PASSWORD_RESET",
+          email
+        };
+      setResetPass(false); 
+      console.log('reset');     
+    }
+
+
+
+    fetch(url, {
+      method: 'POST',
+      body: JSON.stringify(bodyContent),
       headers: {
         'Content-Type': 'application/json',
       },
@@ -91,6 +119,23 @@ const AuthForm = () => {
         dispatch(authActions.setError(error.message))
       });
   };
+
+  let buttonContent;
+
+  if(isLogin && error === 'INVALID_PASSWORD') {
+    buttonContent = 'Reset Password';
+  }
+  
+  if(isLogin && error !== 'INVALID_PASSWORD') {
+    buttonContent = 'Login';
+  }
+
+  if(!isLogin && !error) {
+    buttonContent = 'Create Account'
+  }
+
+
+
 
   const focusHandler = () => {
     dispatch(authActions.setError(false))
@@ -127,7 +172,7 @@ const AuthForm = () => {
         )}
         <div className={classes.actions}>
           {!isLoading && (
-            <button>{isLogin ? 'Login' : 'Create Account'}</button>
+            <button>{buttonContent}</button>
           )}
           {isLoading && <p>Loading...</p>}
           <div className={classes.actions}>

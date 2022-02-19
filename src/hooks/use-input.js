@@ -20,6 +20,8 @@ const inputStateReducer = (state, action) => {
   return inputStateReducer;
 };
 
+//validateValue is a function which will be received from components
+
 const useInput = validateValue => {
   const [inputState, dispatch] = useReducer(
     inputStateReducer,
