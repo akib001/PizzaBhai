@@ -120,21 +120,19 @@ const AuthForm = () => {
       });
   };
 
-  let buttonContent;
+  // let buttonContent;
 
-  if(isLogin && error === 'INVALID_PASSWORD') {
-    buttonContent = 'Reset Password';
-  }
+  // if(isLogin && error === 'INVALID_PASSWORD') {
+  //   buttonContent = 'Reset Password';
+  // }
   
-  if(isLogin && error !== 'INVALID_PASSWORD') {
-    buttonContent = 'Login';
-  }
+  // if(isLogin && error !== 'INVALID_PASSWORD') {
+  //   buttonContent = 'Login';
+  // }
 
-  if(!isLogin && !error) {
-    buttonContent = 'Create Account'
-  }
-
-
+  // if(!isLogin && !error) {
+  //   buttonContent = 'Create Account'
+  // }
 
 
   const focusHandler = () => {
@@ -170,9 +168,10 @@ const AuthForm = () => {
             <p>{error}</p>
           </div>
         )}
+        {(isLogin && error === 'INVALID_PASSWORD') && <button>Reset Password</button>}
         <div className={classes.actions}>
           {!isLoading && (
-            <button>{buttonContent}</button>
+            <button>{isLogin ? 'Login' : 'Create Account'}</button>
           )}
           {isLoading && <p>Loading...</p>}
           <div className={classes.actions}>
