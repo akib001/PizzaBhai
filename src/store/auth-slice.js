@@ -2,6 +2,8 @@ import { createSlice } from '@reduxjs/toolkit';
 
 let initialUserToken = localStorage.getItem('userToken');
 let initialAdminToken = localStorage.getItem('adminToken');
+let retrivedUserName = localStorage.getItem('userName');
+let retrivedUserEmail = localStorage.getItem('userEmail');
 
 const initialState = {
   userToken: initialUserToken,
@@ -9,6 +11,9 @@ const initialState = {
 
   userLoggedIn: false,
   adminLoggedIn: false,
+
+  userName: retrivedUserName,
+  userEmail: retrivedUserEmail,
 
   error: '',
   totalOrderedQuantity: 0,
@@ -42,6 +47,9 @@ const authSlice = createSlice({
       localStorage.removeItem('userToken');
       state.totalOrderedQuantity = 0;
       state.totalOrderedPrice = 0;
+
+      state.userName = '';
+      state.userEmail = '';
     },
 
     adminLogout(state) {
@@ -49,6 +57,13 @@ const authSlice = createSlice({
       localStorage.removeItem('adminToken');
       state.totalOrderedQuantity = 0;
       state.totalOrderedPrice = 0;
+    },
+
+    setUserProfile(state, action) {
+      state.userName = action.payload.name;
+      state.userEmail = action.payload.email;
+      localStorage.setItem('userName', state.userName);
+      localStorage.setItem('userEmail', state.userEmail);
     },
 
     setError(state, action) {

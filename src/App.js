@@ -7,8 +7,8 @@ import HomePage from './pages/HomePage';
 import {Navigate} from 'react-router-dom';
 import { cartActions } from './store/cart-slice';
 const AuthPage = React.lazy(() => import('./pages/AuthPage'));
-const AdminDashboard = React.lazy(() => import('./pages/AdminDashboard'));
-const UserDashboard = React.lazy(() => import('./pages/UserDashboard'));
+const AdminDashboard = React.lazy(() => import('./pages/AdminDashboardPage'));
+const UserDashboard = React.lazy(() => import('./pages/UserDashboardPage'));
 
 let runFirstTime = true;
 
@@ -30,9 +30,7 @@ function App() {
       totalQuantity: cartObject.totalQuantity,
       totalAmount: cartObject.totalAmount
     }));
-    }
-
-    
+    }    
   }, [dispatch]);
 
   useEffect(() => {

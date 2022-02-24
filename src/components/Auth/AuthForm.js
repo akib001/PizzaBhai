@@ -35,11 +35,12 @@ const AuthForm = () => {
         // );
         // const name = result.user.displayName;
         // const profilePic = result.user.photoURL;
-        if (isAdminMode) {
+        if (isAdminMode) {          
           dispatch(authActions.adminLogin(result._tokenResponse.idToken));
           navigate('/admin');
         } else {
           dispatch(authActions.userLogin(result._tokenResponse.idToken));
+          dispatch(authActions.setUserProfile({name:result._tokenResponse.firstName, email: result._tokenResponse.email}))
           navigate('/user');
         }        
       })
@@ -119,6 +120,7 @@ const AuthForm = () => {
           navigate('/admin');
         } else {
           dispatch(authActions.userLogin(data.idToken));
+          dispatch(authActions.setUserProfile({name:'User', email: data.email}))
           navigate('/user');
         }
         

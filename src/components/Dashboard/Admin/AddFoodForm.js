@@ -1,7 +1,7 @@
 import React from 'react';
 import classes from './AddFoodForm.module.css';
-import Modal from '../UI/Modal';
-import useInput from '../../hooks/use-input';
+import Modal from '../../UI/Modal';
+import useInput from '../../../hooks/use-input';
 
 function AddFoodForm(props) {
   const {
