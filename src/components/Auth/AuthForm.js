@@ -1,8 +1,9 @@
-import { useState, useRef} from 'react';
+import { useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { signInWithGoogle } from '../../firebase/Firebase'
+import { signInWithGoogle } from '../../firebase/Firebase';
 import { useSelector, useDispatch } from 'react-redux';
-import { authActions } from '../../store/auth-slice'; 
+import { authActions } from '../../store/auth-slice';
+import React from 'react';
 
 import classes from './AuthForm.module.css';
 
@@ -11,38 +12,43 @@ const AuthForm = () => {
   const enteredPasswordRef = useRef();
   const [isLogin, setIsLogin] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
-  const [resetPass, setResetPass] = useState(false);
-  
+  const [isAdminMode, setIsAdminMode] = useState(false);
 
   const navigate = useNavigate();
 
-
   const dispatch = useDispatch();
-  const error = useSelector(state => state.auth.error);
-
+  const error = useSelector((state) => state.auth.error);
 
   const switchAuthModeHandler = () => {
-    setIsLogin(prevState => !prevState);
+    setIsLogin((prevState) => !prevState);
+  };
+
+  const loginModeHandler = () => {
+    setIsAdminMode((prevState) => !prevState);
   };
 
   const signInWithGoogleHandler = () => {
-
     signInWithGoogle()
-      .then(result => {
+      .then((result) => {
         // const expirationTime = new Date(
         //   new Date().getTime() + +result._tokenResponse.expiresIn * 1000
         // );
         // const name = result.user.displayName;
         // const profilePic = result.user.photoURL;
-        dispatch(authActions.login(result._tokenResponse.idToken));
-        navigate('/admin')
+        if (isAdminMode) {
+          dispatch(authActions.adminLogin(result._tokenResponse.idToken));
+          navigate('/admin');
+        } else {
+          dispatch(authActions.userLogin(result._tokenResponse.idToken));
+          navigate('/user');
+        }        
       })
-      .catch(error => {
+      .catch((error) => {
         console.log(error);
       });
   };
 
-  const submitHandler = event => {
+  const submitHandler = (event) => {
     event.preventDefault();
     const email = enteredEmailRef.current.value;
     const password = enteredPasswordRef.current.value;
@@ -59,32 +65,28 @@ const AuthForm = () => {
         returnSecureToken: true,
       };
       console.log('login');
-    }  
+    }
 
     if (!isLogin && error !== 'INVALID_PASSWORD') {
       url =
         'https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyAL0N1DDE5PErh_25vFihwZzgbQ2cozKYY';
-        bodyContent = {
-          email,
-          password,
-          returnSecureToken: true,
-        };    
-        console.log('signup');
+      bodyContent = {
+        email,
+        password,
+        returnSecureToken: true,
+      };
+      console.log('signup');
     }
-
 
     if (error === 'INVALID_PASSWORD') {
       url =
         'https://identitytoolkit.googleapis.com/v1/accounts:sendOobCode?key=AIzaSyAL0N1DDE5PErh_25vFihwZzgbQ2cozKYY';
       bodyContent = {
-          requestType: "PASSWORD_RESET",
-          email
-        };
-      setResetPass(false); 
-      console.log('reset');     
+        requestType: 'PASSWORD_RESET',
+        email,
+      };
+      console.log('reset');
     }
-
-
 
     fetch(url, {
       method: 'POST',
@@ -93,12 +95,12 @@ const AuthForm = () => {
         'Content-Type': 'application/json',
       },
     })
-      .then(response => {
+      .then((response) => {
         setIsLoading(false);
         if (response.ok) {
           return response.json();
         } else {
-          return response.json().then(data => {
+          return response.json().then((data) => {
             let errorMessage = 'Authentication Failed!';
             if (data && data.error.message && data.error) {
               errorMessage = data.error.message;
@@ -107,88 +109,97 @@ const AuthForm = () => {
           });
         }
       })
-      .then(data => {
+      .then((data) => {
         console.log(data);
         // const expirationTime = new Date(
         //   new Date().getTime() + +data.expiresIn * 1000
         // );
-        dispatch(authActions.login(data.idToken));
-        navigate('/admin');
+        if (isAdminMode) {
+          dispatch(authActions.adminLogin(data.idToken));
+          navigate('/admin');
+        } else {
+          dispatch(authActions.userLogin(data.idToken));
+          navigate('/user');
+        }
+        
       })
-      .catch(error => {
-        dispatch(authActions.setError(error.message))
+      .catch((error) => {
+        dispatch(authActions.setError(error.message));
       });
   };
 
-  // let buttonContent;
-
-  // if(isLogin && error === 'INVALID_PASSWORD') {
-  //   buttonContent = 'Reset Password';
-  // }
-  
-  // if(isLogin && error !== 'INVALID_PASSWORD') {
-  //   buttonContent = 'Login';
-  // }
-
-  // if(!isLogin && !error) {
-  //   buttonContent = 'Create Account'
-  // }
-
-
   const focusHandler = () => {
-    dispatch(authActions.setError(false))
+    dispatch(authActions.setError(false));
   };
 
   return (
-    <section className={classes.auth}>
-      <h1>{isLogin ? 'Login' : 'Sign Up'}</h1>
-      <form onSubmit={submitHandler}>
-        <div className={classes.control}>
-          <label htmlFor="email">Your Email</label>
-          <input
-            onFocus={focusHandler}
-            type="email"
-            id="email"
-            required
-            ref={enteredEmailRef}
-          />
-        </div>
-        <div className={classes.control}>
-          <label htmlFor="password">Your Password</label>
-          <input
-            onFocus={focusHandler}
-            type="password"
-            id="password"
-            required
-            ref={enteredPasswordRef}
-          />
-        </div>
-        {error && (
-          <div className={classes.error}>
-            <p>{error}</p>
+    <React.Fragment>
+      <button onClick={loginModeHandler}>
+        {isAdminMode ? 'Switch to User Login' : 'Switch to Admin Login'}
+      </button>
+      <section className={classes.auth}>
+        <h1>
+          {isLogin
+            ? isAdminMode
+              ? 'Admin login'
+              : 'User login'
+            : isAdminMode
+            ? 'Admin Sign Up'
+            : 'User Sign Up'}
+        </h1>
+        <form onSubmit={submitHandler}>
+          <div className={classes.control}>
+            <label htmlFor="email">Your Email</label>
+            <input
+              onFocus={focusHandler}
+              type="email"
+              id="email"
+              required
+              ref={enteredEmailRef}
+            />
           </div>
-        )}
-        {(isLogin && error === 'INVALID_PASSWORD') && <button>Reset Password</button>}
-        <div className={classes.actions}>
-          {!isLoading && (
-            <button>{isLogin ? 'Login' : 'Create Account'}</button>
+          <div className={classes.control}>
+            <label htmlFor="password">Your Password</label>
+            <input
+              onFocus={focusHandler}
+              type="password"
+              id="password"
+              required
+              ref={enteredPasswordRef}
+            />
+          </div>
+          {error && (
+            <div className={classes.error}>
+              <p>{error}</p>
+            </div>
           )}
-          {isLoading && <p>Loading...</p>}
+          {isLogin && error === 'INVALID_PASSWORD' && (
+            <button>Reset Password</button>
+          )}
           <div className={classes.actions}>
-            <button className={classes['login-with-google-btn']} onClick={signInWithGoogleHandler}>
-              Sign In With Google
+            {!isLoading && (
+              <button>{isLogin ? 'Login' : 'Create Account'}</button>
+            )}
+            {isLoading && <p>Loading...</p>}
+            <div className={classes.actions}>
+              <button
+                className={classes['login-with-google-btn']}
+                onClick={signInWithGoogleHandler}
+              >
+                {`Sign ${isLogin ? 'in' : 'up'} With Google`}
+              </button>
+            </div>
+            <button
+              type="button"
+              className={classes.toggle}
+              onClick={switchAuthModeHandler}
+            >
+              {isLogin ? 'Create new account' : 'Login with existing account'}
             </button>
           </div>
-          <button
-            type="button"
-            className={classes.toggle}
-            onClick={switchAuthModeHandler}
-          >
-            {isLogin ? 'Create new account' : 'Login with existing account'}
-          </button>
-        </div>
-      </form>
-    </section>
+        </form>
+      </section>
+    </React.Fragment>
   );
 };
 

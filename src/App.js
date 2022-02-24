@@ -8,7 +8,7 @@ import {Navigate} from 'react-router-dom';
 import { cartActions } from './store/cart-slice';
 const AuthPage = React.lazy(() => import('./pages/AuthPage'));
 const AdminDashboard = React.lazy(() => import('./pages/AdminDashboard'));
-
+const UserDashboard = React.lazy(() => import('./pages/UserDashboard'));
 
 let runFirstTime = true;
 
@@ -17,7 +17,8 @@ function App() {
 
   const cart = useSelector(state => state.cart);
 
-  const isLoggedIn = useSelector(state => state.auth.token)
+  const isUserLoggedIn = useSelector(state => state.auth.userToken);
+  const isAdminLoggedIn = useSelector(state => state.auth.adminToken);
 
   useEffect(() => {
     const retrievedCart = localStorage.getItem('cart')
@@ -57,7 +58,8 @@ function App() {
         <Routes>
         <Route path="/" element={<HomePage />}/>
         <Route path="/auth" element={<AuthPage></AuthPage>}/>
-        <Route path="/admin" element={isLoggedIn ? <AdminDashboard/> : <Navigate to={'/auth'} />}/>
+        <Route path="/admin" element={isAdminLoggedIn ? <AdminDashboard/> : <Navigate to={'/auth'} />}/>
+        <Route path="/user" element={isUserLoggedIn ? <UserDashboard/> : <Navigate to={'/auth'} />}/>
       </Routes>
       </Suspense>      
     </Layout>

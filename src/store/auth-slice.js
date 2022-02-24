@@ -1,10 +1,15 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-let initialToken = localStorage.getItem('token');
+let initialUserToken = localStorage.getItem('userToken');
+let initialAdminToken = localStorage.getItem('adminToken');
 
 const initialState = {
-  token: initialToken,
-  isLoggedIn: false,
+  userToken: initialUserToken,
+  adminToken: initialAdminToken,
+
+  userLoggedIn: false,
+  adminLoggedIn: false,
+
   error: '',
   totalOrderedQuantity: 0,
   totalOrderedPrice: 0,
@@ -15,17 +20,33 @@ const authSlice = createSlice({
   initialState: initialState,
   reducers: {
     isUserLoggedIn(state) {
-      state.isLoggedIn = !!state.token;
+      state.userLoggedIn = !!state.userToken;
     },
 
-    login(state, action) {
-      state.token = action.payload;
-      localStorage.setItem('token', state.token);
+    isAdminLoggedIn(state) {
+      state.adminLoggedIn = !!state.adminToken;
     },
 
-    logout(state) {
-      state.token = '';
-      localStorage.removeItem('token');
+    userLogin(state, action) {
+      state.userToken = action.payload;
+      localStorage.setItem('userToken', state.userToken);
+    },
+
+    adminLogin(state, action) {
+      state.adminToken = action.payload;
+      localStorage.setItem('adminToken', state.adminToken);
+    },
+
+    userLogout(state) {
+      state.userToken = '';
+      localStorage.removeItem('userToken');
+      state.totalOrderedQuantity = 0;
+      state.totalOrderedPrice = 0;
+    },
+
+    adminLogout(state) {
+      state.adminToken = '';
+      localStorage.removeItem('adminToken');
       state.totalOrderedQuantity = 0;
       state.totalOrderedPrice = 0;
     },
