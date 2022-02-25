@@ -1,12 +1,12 @@
 import React from 'react'
 import Card from '../../UI/Card'
-import classes from './UserDashboard.module.css'
+import classes from './UserOrder.module.css'
 import UserOrderItem from './UserOrderItem'
 
 function UserOrder(props) {
   
   return (
-    <section>
+    <section className={classes.orders}>
       <Card>
         <p><span>Name: </span>{props.name}</p> 
         <p><span>Email: </span>{props.email}</p> 

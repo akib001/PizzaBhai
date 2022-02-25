@@ -136,15 +136,18 @@ const AuthForm = () => {
 
   return (
     <React.Fragment>
-      <button onClick={loginModeHandler}>
+      <div className={classes[`switch-button`]}>
+        <button onClick={loginModeHandler}>
         {isAdminMode ? 'Switch to User Login' : 'Switch to Admin Login'}
       </button>
+      </div>
+      
       <section className={classes.auth}>
         <h1>
           {isLogin
             ? isAdminMode
-              ? 'Admin login'
-              : 'User login'
+              ? 'Admin Login'
+              : 'User Login'
             : isAdminMode
             ? 'Admin Sign Up'
             : 'User Sign Up'}
@@ -201,6 +204,8 @@ const AuthForm = () => {
           </div>
         </form>
       </section>
+
+      
     </React.Fragment>
   );
 };

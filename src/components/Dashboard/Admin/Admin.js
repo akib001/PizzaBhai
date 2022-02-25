@@ -3,6 +3,7 @@ import OrderList from './OrderList';
 import OrderSummary from './OrderSummary';
 import AddFoodForm from './AddFoodForm';
 import { useState } from 'react';
+import classes from './Admin.module.css'
 
 const Admin = () => {
   const [showAddFoodForm, setShowAddFoodForm] = useState(false);
@@ -36,7 +37,10 @@ const Admin = () => {
   return (
     <Fragment>
       <OrderSummary />
-      <button onClick={addFoodHandler}>Add New Food Item</button>
+      <div className={classes.container}>
+        <button onClick={addFoodHandler}>Add New Food Item</button>
+      </div>
+      
       {showAddFoodForm && <AddFoodForm onConfirm={formSubmitHandler} onHideAddFoodFormHandler={hideAddFoodFormHandler} />}
       <OrderList />
     </Fragment>

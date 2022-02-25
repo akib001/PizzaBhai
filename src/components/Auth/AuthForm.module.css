@@ -1,3 +1,29 @@
+.switch-button {
+  display: flex;
+  justify-content: center;
+}
+
+.switch-button > button {
+  cursor: pointer;
+  font: inherit;
+  color: #000;
+
+  background-color: white;
+  border: 1px solid #ccc;
+  box-shadow: 0 0 0 1px #ccc;
+  border-radius: 4px;
+  padding: 0.5rem 2.5rem;
+  display: flex;
+  justify-content: center;
+}
+
+.switch-button > button:hover {
+  background-color: black;
+  border-color: black;
+  color: white;
+}
+
+
 .auth {
     margin: 3rem auto;
     width: 95%;

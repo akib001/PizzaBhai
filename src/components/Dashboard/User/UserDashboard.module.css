@@ -16,4 +16,8 @@
     font-size: 2rem;
     margin-top: 0;
   }
-  
+ 
+.loading {
+  text-align: center;
+  color: white;
+}   

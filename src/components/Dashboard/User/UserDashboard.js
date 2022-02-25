@@ -5,7 +5,6 @@ import { useSelector, useDispatch } from 'react-redux';
 import UserOrder from './UserOrder';
 
 function UserDashboard() {
-  const dispatch = useDispatch();
 
   const userName = useSelector((state) => state.auth.userName);
   const userEmail = useSelector((state) => state.auth.userEmail);
@@ -91,7 +90,7 @@ function UserDashboard() {
   }
 
   if (isLoading) {
-    content = <h2>Loading...</h2>;
+    content = <h2 className={classes.loading}>Loading...</h2>;
   } 
 
   return (
