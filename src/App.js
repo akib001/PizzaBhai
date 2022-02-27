@@ -56,6 +56,7 @@ function App() {
         <Routes>
         <Route path="/" element={<HomePage />}/>
         <Route path="/auth" element={<AuthPage></AuthPage>}/>
+        {/* blocks pages if user isn't logged in */}
         <Route path="/admin" element={isAdminLoggedIn ? <AdminDashboard/> : <Navigate to={'/auth'} />}/>
         <Route path="/user" element={isUserLoggedIn ? <UserDashboard/> : <Navigate to={'/auth'} />}/>
       </Routes>
