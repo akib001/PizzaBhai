@@ -1,8 +1,10 @@
 .form {
   margin: 1rem 0;
-  height: 19rem;
-  overflow: auto;
+  max-height: 19rem;
+  overflow-y: scroll;
 }
+
+
 
 .control {
   margin-bottom: 0.5rem;

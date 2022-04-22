@@ -118,7 +118,7 @@ const CheckoutForm = props => {
     : classes.control;
 
   return (
-    <form onSubmit={submitHandler}>
+    <form className={classes.scroll} onSubmit={submitHandler}>
       <div className={nameInputclasses}>
         <label htmlFor="name">Your Name</label>
         <input

@@ -66,7 +66,7 @@ const Header = props => {
         {pathname !== '/' ? (
           <button onClick={homeHandler}>Home</button>
         ) : (
-          <h1 onClick={homeHandler}>ReactMeals</h1>
+          <h1 onClick={homeHandler}>PizzaBhai</h1>
         )}
         {buttonContent}
         {pathname === '/' &&

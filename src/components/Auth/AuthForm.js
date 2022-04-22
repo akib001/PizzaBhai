@@ -30,11 +30,6 @@ const AuthForm = () => {
   const signInWithGoogleHandler = () => {
     signInWithGoogle()
       .then((result) => {
-        // const expirationTime = new Date(
-        //   new Date().getTime() + +result._tokenResponse.expiresIn * 1000
-        // );
-        // const name = result.user.displayName;
-        // const profilePic = result.user.photoURL;
         if (isAdminMode) {          
           dispatch(authActions.adminLogin(result._tokenResponse.idToken));
           navigate('/admin');
