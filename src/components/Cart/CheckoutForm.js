@@ -118,7 +118,8 @@ const CheckoutForm = props => {
     : classes.control;
 
   return (
-    <form className={classes.scroll} onSubmit={submitHandler}>
+    <form  onSubmit={submitHandler}>
+      <div className={classes.scroll}>
       <div className={nameInputclasses}>
         <label htmlFor="name">Your Name</label>
         <input
@@ -184,6 +185,7 @@ const CheckoutForm = props => {
           value={enteredPostal}
         />
         {postalIsInvalid && <p>Please enter a valid postal!</p>}
+      </div>
       </div>
       <div className={classes.actions}>
         <button type="button" onClick={props.onCancel}>
