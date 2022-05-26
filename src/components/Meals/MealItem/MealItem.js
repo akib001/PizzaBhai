@@ -2,6 +2,7 @@ import { useDispatch } from 'react-redux';
 import { cartActions } from '../../../store/cart-slice';
 import MealItemForm from './MealItemForm';
 import classes from './MealItem.module.css';
+import pizzaImage from '../../../assets/pizza/pizza1.jpg'
 
 const MealItem = props => {
   const dispatch = useDispatch();
@@ -22,10 +23,15 @@ const MealItem = props => {
 
   return (
     <li className={classes.meal}>
+      <div className={classes['meal-info']}>
+        <div className={classes['food-image']}>
+        <img src={pizzaImage} alt="" />
+        </div>
       <div>
         <h3>{props.title}</h3>
         <div className={classes.description}>{props.description}</div>
         <div className={classes.price}>{price}</div>
+      </div>
       </div>
       <div>
         <MealItemForm id={props.id} onAddToCart={addToCartHandler} />

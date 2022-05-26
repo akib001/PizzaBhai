@@ -22,3 +22,10 @@
     transform: translateY(0);
   }
 }
+
+@media screen and (min-width: 1600px) {
+  .meals {
+    max-width: 67rem;
+  }
+}  
+
