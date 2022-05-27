@@ -5,6 +5,7 @@ import Modal from '../UI/Modal';
 import CartItem from './CartItem';
 import classes from './Cart.module.css';
 import CheckoutForm from './CheckoutForm';
+import { uiActions } from '../../store/ui-slice';
 
 const Cart = props => {
   const dispatch = useDispatch();
@@ -29,6 +30,10 @@ const Cart = props => {
   const checkoutHandler = () => {
     setIsCheckout(true);
   };
+
+  const hideCartHandler = () => {
+    dispatch(uiActions.hideCartHandler())
+  }
 
   const submitDataHandler = async data => {
     setIsLoading(true);
@@ -67,7 +72,7 @@ const Cart = props => {
 
   const modalButton = (
     <div className={classes.actions}>
-      <button className={classes['button--alt']} onClick={props.onClose}>
+      <button className={classes['button--alt']} onClick={hideCartHandler}>
         Close
       </button>
       {hasItems && (
@@ -86,7 +91,7 @@ const Cart = props => {
         <span>{totalAmount}</span>
       </div>
       {isCheckout && (
-        <CheckoutForm onConfirm={submitDataHandler} onCancel={props.onClose} />
+        <CheckoutForm onConfirm={submitDataHandler} onCancel={hideCartHandler} />
       )}
       {!isCheckout && modalButton}
     </React.Fragment>
@@ -97,13 +102,13 @@ const Cart = props => {
   const orderCompleteModal = <React.Fragment>
     <p>Order Complete!</p>
     <div className={classes.actions}>
-      <button className={classes.button} onClick={props.onClose}>
+      <button className={classes.button} onClick={hideCartHandler}>
         Close
       </button>
     </div>
   </React.Fragment>
 
-  return <Modal onClose={props.onClose}>
+  return <Modal>
     {!isLoading && !orderComplete && cartModal}
     {isLoading && loadingModal}
     {orderComplete && !isLoading && orderCompleteModal}

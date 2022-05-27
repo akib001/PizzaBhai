@@ -1,25 +1,15 @@
 import Header from './Header';
 import React from 'react';
-import { useState } from 'react';
 import Cart from '../Cart/Cart';
-import AuthModal from '../Auth/AuthModal';
+import { useSelector} from 'react-redux';
 
 const Layout = props => {
-  const [cartIsShown, setCartIsShown] = useState(false);
-
-  const showCartHandler = () => {
-    setCartIsShown(true);
-  };
-
-  const hideCartHandler = () => {
-    setCartIsShown(false);
-  };
+  const stateShowCart = useSelector(state => state.ui.showCart);
 
   return (
     <React.Fragment>
-      <AuthModal/>
-      {cartIsShown && <Cart onClose={hideCartHandler} />}
-      <Header onShowCart={showCartHandler} />
+      {stateShowCart && <Cart/>}
+      <Header/>
       <main>{props.children}</main>
     </React.Fragment>
   );

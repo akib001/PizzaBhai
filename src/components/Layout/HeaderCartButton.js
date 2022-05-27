@@ -1,10 +1,12 @@
 import { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { uiActions } from '../../store/ui-slice';
 
 import CartIcon from '../Cart/CartIcon';
 import classes from './HeaderCartButton.module.css';
 
 const HeaderCartButton = (props) => {
+  const dispatch = useDispatch();
   const stateItems = useSelector(state => state.cart.items);
   const stateTotalQuantity = useSelector(state => state.cart.totalQuantity);
   const [ cartBtnBump, setCartBtnBump] = useState(false);
@@ -27,7 +29,7 @@ const HeaderCartButton = (props) => {
   }, [stateItems])
 
   return (
-    <button className={cartBtnClasses} onClick={props.onClick}>
+    <button className={cartBtnClasses} onClick={() => dispatch(uiActions.showCartHandler())}>
       <span className={classes.icon}>
         <CartIcon />
       </span>

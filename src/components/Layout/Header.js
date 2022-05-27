@@ -72,7 +72,6 @@ const Header = props => {
         {pathname === '/' &&
           <HeaderCartButton
           className={classes.headerButton}
-          onClick={props.onShowCart}
         />
         }
       </header>

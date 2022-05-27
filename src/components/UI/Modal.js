@@ -1,10 +1,13 @@
 import { Fragment } from 'react';
 import ReactDOM from 'react-dom';
 import classes from './Modal.module.css';
+import { useDispatch } from 'react-redux';
+import { uiActions } from '../../store/ui-slice';
 
 //Backdrop is the dark backpart of the card. If you click on the Backdrop the card will minimize
 const Backdrop = (props) => {
-  return <div className={classes.backdrop} onClick={props.onClose}/>;
+  const dispatch = useDispatch();
+  return <div className={classes.backdrop} onClick={() => dispatch(uiActions.hideCartHandler())}/>;
 };
 
 // ModalOverlay is the white card with it's content. Modal will contain all of it's children with props.children
@@ -22,7 +25,7 @@ const portalElement = document.getElementById('overlays');
 const Modal = (props) => {
   return (
     <Fragment>
-      {ReactDOM.createPortal(<Backdrop onClose={props.onClose} />, portalElement)}
+      {ReactDOM.createPortal(<Backdrop/>, portalElement)}
       {ReactDOM.createPortal(
         <ModalOverlay>{props.children}</ModalOverlay>,
         portalElement
