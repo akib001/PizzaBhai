@@ -1,19 +1,20 @@
 import { Fragment } from 'react';
 import ReactDOM from 'react-dom';
 import classes from './Modal.module.css';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { uiActions } from '../../store/ui-slice';
 
 //Backdrop is the dark backpart of the card. If you click on the Backdrop the card will minimize
 const Backdrop = (props) => {
   const dispatch = useDispatch();
-  return <div className={classes.backdrop} onClick={() => dispatch(uiActions.hideCartHandler())}/>;
+  return <div className={classes.backdrop} onClick={() => dispatch(uiActions.closeAllModal())}/>;
 };
 
 // ModalOverlay is the white card with it's content. Modal will contain all of it's children with props.children
 const ModalOverlay = (props) => {
+  const stateShowCart = useSelector(state => state.ui.showCart)
   return (
-    <div className={classes.modal}>
+    <div className={stateShowCart ? classes.cartModal : classes.authModal}>
       <div className={classes.content}>{props.children}</div>
     </div>
   );

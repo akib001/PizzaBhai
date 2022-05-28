@@ -55,10 +55,10 @@ function App() {
       <Suspense fallback={<p>Loading..</p>}>
         <Routes>
         <Route path="/" element={<HomePage />}/>
-        <Route path="/auth" element={<AuthPage/>}/>
+        {/* <Route path="/auth" element={<AuthPage/>}/> */}
         {/* blocks pages if user isn't logged in */}
-        <Route path="/admin" element={isAdminLoggedIn ? <AdminDashboard/> : <Navigate to={'/auth'} />}/>
-        <Route path="/user" element={isUserLoggedIn ? <UserDashboard/> : <Navigate to={'/auth'} />}/>
+        <Route path="/admin" element={isAdminLoggedIn ? <AdminDashboard/> : <Navigate to={'/'} />}/>
+        <Route path="/user" element={isUserLoggedIn ? <UserDashboard/> : <Navigate to={'/'} />}/>
       </Routes>
       </Suspense>      
     </Layout>

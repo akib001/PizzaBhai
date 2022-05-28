@@ -1,26 +1,42 @@
-.switch-button {
+.switch-container {
+  text-align: center;
+  border-bottom: 1px solid #ebebeb;
+  margin: -.5rem 0 1rem 0;
+}
+
+.switch-container > ul {
   display: flex;
+  flex-wrap: wrap;
   justify-content: center;
 }
 
-.switch-button > button {
-  cursor: pointer;
-  font: inherit;
-  color: #000;
+.switch-container .inactive-switch{
+  list-style: none;
+  margin-right: 2rem;
+  padding-bottom: .5rem;
+  border-bottom: 2px solid white;
+  transition: 300ms;
+}
 
+.switch-container .inactive-switch:hover{
+  border-bottom: 2px solid #757575;
+}
+
+.switch-container .active-switch {
+
+  margin-right: 2rem;
+  padding-bottom: .5rem;
+  border-bottom: 2px solid #4d1601;
+  transition: 300ms;
+}
+
+.switch-container > ul > li > button{
+  display: inline-block;
+  border: none;
   background-color: white;
-  border: 1px solid #ccc;
-  box-shadow: 0 0 0 1px #ccc;
-  border-radius: 4px;
-  padding: 0.5rem 2.5rem;
-  display: flex;
-  justify-content: center;
-}
-
-.switch-button > button:hover {
-  background-color: black;
-  border-color: black;
-  color: white;
+  font-size: 1.18rem;
+  color: #111;
+  font-weight: bold;
 }
 
 
@@ -32,13 +48,13 @@
     background-color: white;
     box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
     padding: 1rem;
-    text-align: center;
-    color: black;
+    text-align: left;
+    color: #111;
   }
   
   .auth h1 {
-    text-align: center;
-    color: black;
+    text-align: left;
+    color: #111;
   }
   
   .control {
@@ -47,20 +63,23 @@
   
   .control label {
     display: block;
-    color: black;
-    font-weight: bold;
+    color: #111;
+    font-weight: 500;
     margin-bottom: 0.5rem;
+    text-align: left;
+    margin-left: .1rem;
   }
   
   .control input {
     font: inherit;
     background-color: white;
-    color: black;
+    color: #111;
     border-radius: 4px;
-    border: 1px solid black;
+    border: 1px solid #111;
     width: 100%;
     text-align: left;
     padding: 0.25rem;
+    margin-bottom: .5rem;
   }
   
   .actions {
@@ -74,22 +93,22 @@
     cursor: pointer;
     font: inherit;
     color: white;
-    background-color: black;
+    background-color: #111;
     border: 1px solid #9f5ccc;
-    border-radius: 4px;
+    border-radius: 6px;
     padding: 0.5rem 2.5rem;
   }
   
   .actions button:hover {
     background-color: rgba(76, 77, 76, 0.979);
-    border-color: black;
-    color: black;
+    border-color: #111;
+    color: #111;
   }
   
   .actions .toggle {
     margin-top: 1rem;
     background-color: transparent;
-    color: black;
+    color: #111;
     border: none;
     padding: 0.15rem 1.5rem;
   }
@@ -115,7 +134,7 @@
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
       Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
     background-image: url(data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTgiIGhlaWdodD0iMTgiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGcgZmlsbD0ibm9uZSIgZmlsbC1ydWxlPSJldmVub2RkIj48cGF0aCBkPSJNMTcuNiA5LjJsLS4xLTEuOEg5djMuNGg0LjhDMTMuNiAxMiAxMyAxMyAxMiAxMy42djIuMmgzYTguOCA4LjggMCAwIDAgMi42LTYuNnoiIGZpbGw9IiM0Mjg1RjQiIGZpbGwtcnVsZT0ibm9uemVybyIvPjxwYXRoIGQ9Ik05IDE4YzIuNCAwIDQuNS0uOCA2LTIuMmwtMy0yLjJhNS40IDUuNCAwIDAgMS04LTIuOUgxVjEzYTkgOSAwIDAgMCA4IDV6IiBmaWxsPSIjMzRBODUzIiBmaWxsLXJ1bGU9Im5vbnplcm8iLz48cGF0aCBkPSJNNCAxMC43YTUuNCA1LjQgMCAwIDEgMC0zLjRWNUgxYTkgOSAwIDAgMCAwIDhsMy0yLjN6IiBmaWxsPSIjRkJCQzA1IiBmaWxsLXJ1bGU9Im5vbnplcm8iLz48cGF0aCBkPSJNOSAzLjZjMS4zIDAgMi41LjQgMy40IDEuM0wxNSAyLjNBOSA5IDAgMCAwIDEgNWwzIDIuNGE1LjQgNS40IDAgMCAxIDUtMy43eiIgZmlsbD0iI0VBNDMzNSIgZmlsbC1ydWxlPSJub256ZXJvIi8+PHBhdGggZD0iTTAgMGgxOHYxOEgweiIvPjwvZz48L3N2Zz4=);
-    background-color: black;
+    background-color: #111;
     background-repeat: no-repeat;
     background-position: 12px 11px;
   }

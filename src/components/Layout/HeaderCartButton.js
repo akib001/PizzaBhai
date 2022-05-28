@@ -29,7 +29,7 @@ const HeaderCartButton = (props) => {
   }, [stateItems])
 
   return (
-    <button className={cartBtnClasses} onClick={() => dispatch(uiActions.showCartHandler())}>
+    <button className={cartBtnClasses} onClick={() => dispatch(uiActions.toggleShowCartHandler())}>
       <span className={classes.icon}>
         <CartIcon />
       </span>

@@ -5,6 +5,7 @@ import classes from './Header.module.css';
 import { useSelector, useDispatch } from 'react-redux';
 import { authActions } from '../../store/auth-slice';
 import { useNavigate } from 'react-router-dom';
+import { uiActions } from '../../store/ui-slice';
 
 const Header = props => {
   const isAdminLoggedIn = useSelector(state => state.auth.adminToken);
@@ -18,10 +19,6 @@ const Header = props => {
 
   const userLogoutHandler = () => {
     dispatch(authActions.userLogout());
-  };
-
-  const loginhandler = () => {
-    navigate('/auth');
   };
 
   const homeHandler = () => {
@@ -57,7 +54,7 @@ const Header = props => {
   }
 
   if (!isUserLoggedIn && !isAdminLoggedIn) {
-    buttonContent = <button onClick={loginhandler}>Login</button>;
+    buttonContent = <button onClick={() => dispatch(uiActions.toggleShowAuthHandler())}>Login</button>;
   }
 
   return (

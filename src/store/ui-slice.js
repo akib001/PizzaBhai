@@ -2,18 +2,23 @@ import { createSlice } from '@reduxjs/toolkit';
 
 const initialCartSlice = {
   showCart: false,
+  showAuth: false
 };
 
 const uiSlice = createSlice({
   name: 'ui',
   initialState: initialCartSlice,
   reducers: {
-    showCartHandler(state) {
-      state.showCart = true;
+    toggleShowCartHandler(state) {
+      state.showCart = !state.showCart;
     },
-    hideCartHandler(state) {
-      state.showCart = false;
+    toggleShowAuthHandler(state) {
+      state.showAuth = !state.showAuth;
     },
+    closeAllModal(state) {
+        state.showCart = false;
+        state.showAuth = false;
+    }
   },
 });
 

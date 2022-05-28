@@ -32,7 +32,7 @@ const Cart = props => {
   };
 
   const hideCartHandler = () => {
-    dispatch(uiActions.hideCartHandler())
+    dispatch(uiActions.toggleShowCartHandler())
   }
 
   const submitDataHandler = async data => {
