@@ -3,7 +3,6 @@ import MealItem from './MealItem/MealItem';
 import classes from './AvailableMeals.module.css';
 import { useState, useEffect } from 'react';
 
-
 const AvailableMeals = () => {
   const [meals, setMeals] = useState([]);
   const [isError, setIsError] = useState(null);
@@ -14,9 +13,7 @@ const AvailableMeals = () => {
       setIsError(null);
       setIsLoading(true);
       try {
-        const response = await fetch(
-          'https://react-http-597d3-default-rtdb.firebaseio.com/meals.json'
-        );
+        const response = await fetch('http://localhost:8080/meals/fetch-meals');
 
         if (!response.ok) {
           throw new Error('Something went wrong');
@@ -24,14 +21,17 @@ const AvailableMeals = () => {
         const data = await response.json();
 
         let loadedMeals = [];
-
+        
         for (const key in data) {
-          loadedMeals.push({
-            id: key,
-            title: data[key].title,
-            description: data[key].description,
-            price: data[key].price,
-          });
+          for (const item in data[key]) {
+            // console.log(data[key][item])
+            loadedMeals.push({
+              id: item,
+              title: data[key][item].title,
+              description: data[key][item].description,
+              price: data[key][item].price,
+            });
+          }
         }
         setMeals(loadedMeals);
       } catch (error) {
@@ -42,7 +42,7 @@ const AvailableMeals = () => {
     fetchMealsHandler();
   }, []);
 
-  const mealsList = meals.map(meal => (
+  const mealsList = meals.map((meal) => (
     <MealItem
       key={meal.id}
       id={meal.id}

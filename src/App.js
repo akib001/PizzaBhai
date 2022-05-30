@@ -6,7 +6,6 @@ import { Route, Routes } from 'react-router-dom';
 import HomePage from './pages/HomePage';
 import {Navigate} from 'react-router-dom';
 import { cartActions } from './store/cart-slice';
-const AuthPage = React.lazy(() => import('./pages/AuthPage'));
 const AdminDashboard = React.lazy(() => import('./pages/AdminDashboardPage'));
 const UserDashboard = React.lazy(() => import('./pages/UserDashboardPage'));
 

@@ -14,19 +14,19 @@
   list-style: none;
   margin-right: 2rem;
   padding-bottom: .5rem;
-  border-bottom: 2px solid white;
+  border-bottom: 3px solid white;
   transition: 300ms;
 }
 
 .switch-container .inactive-switch:hover{
-  border-bottom: 2px solid #757575;
+  border-bottom: 3px solid #757575;
 }
 
 .switch-container .active-switch {
 
   margin-right: 2rem;
   padding-bottom: .5rem;
-  border-bottom: 2px solid #4d1601;
+  border-bottom: 3px solid #4d1601;
   transition: 300ms;
 }
 
