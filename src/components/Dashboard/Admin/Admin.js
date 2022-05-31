@@ -4,24 +4,19 @@ import OrderSummary from './OrderSummary';
 import AddFoodForm from './AddFoodForm';
 import { useState } from 'react';
 import classes from './Admin.module.css'
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { uiActions } from '../../../store/ui-slice';
 
 const Admin = () => {
-  const [showAddFoodForm, setShowAddFoodForm] = useState(false);
+  const dispatch = useDispatch();
 
   const stateAdminToken = useSelector(state => state.auth.adminToken);
+  const stateShowAddFood = useSelector(state => state.ui.showAddFood);
 
-
-  // This function will handle add food form
-  const addFoodHandler = () => {
-    setShowAddFoodForm(true);
-  };
-
-  const hideAddFoodFormHandler = (event) => {
-    setShowAddFoodForm(event);
+  const toggleShowAddFoodHandler = () => {
+    dispatch(uiActions.toggleShowAddFoodHandler());
   }
 
-  // TODO: 500 server error fix
   const formSubmitHandler = async (submitData) => {
     let formData = new FormData();
     // multer image name should be same as this 
@@ -48,10 +43,10 @@ const Admin = () => {
     <Fragment>
       <OrderSummary />
       <div className={classes.container}>
-        <button onClick={addFoodHandler}>Add New Food Item</button>
+        <button onClick={toggleShowAddFoodHandler}>Add New Food Item</button>
       </div>
       
-      {showAddFoodForm && <AddFoodForm onConfirm={formSubmitHandler} onHideAddFoodFormHandler={hideAddFoodFormHandler} />}
+      {stateShowAddFood && <AddFoodForm onConfirm={formSubmitHandler} onHideAddFoodFormHandler={toggleShowAddFoodHandler} />}
       <OrderList />
     </Fragment>
   );

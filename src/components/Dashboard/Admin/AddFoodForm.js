@@ -3,9 +3,9 @@ import classes from './AddFoodForm.module.css';
 import Modal from '../../UI/Modal';
 import useInput from '../../../hooks/use-input';
 
+
 function AddFoodForm(props) {
   const [selectedFile, setSelectedFile] = useState(null);
-
   const {
     value: enteredTitle,
     isValid: titleIsValid,
