@@ -2,12 +2,12 @@ import Card from '../../UI/Card';
 import classes from './OrderList.module.css';
 import Order from './Order';
 import { useState, useEffect } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { authActions } from '../../../store/auth-slice';
 
 const OrderList = () => {
   const dispatch = useDispatch();
-
+  const stateAdminToken = useSelector(state => state.auth.adminToken);
   const [orders, setOrders] = useState([]);
   const [isError, setIsError] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
@@ -18,7 +18,11 @@ const OrderList = () => {
       setIsLoading(true);
       try {
         const response = await fetch(
-          'https://react-http-597d3-default-rtdb.firebaseio.com/orders.json'
+          'http://localhost:8080/orders/fetch-orders', {
+            headers: {
+              Authorization: `Bearer ${stateAdminToken}`,
+            }
+          }
         );
 
         if (!response.ok) {
@@ -26,7 +30,7 @@ const OrderList = () => {
         }
         const data = await response.json();
 
-        // console.log(data);
+        console.log(data);
 
         let loadedOrders = [];
         

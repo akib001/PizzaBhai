@@ -41,6 +41,11 @@
   animation: slide-down 300ms ease-out forwards;
 }
 
+@media (min-width: 450px) {
+  .authModal {
+    left: calc(50% - 12.5rem);
+  }
+}
 @media (min-width: 768px) {
   .cartModal {
     width: 40rem;
