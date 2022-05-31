@@ -1,9 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
 import classes from './AddFoodForm.module.css';
 import Modal from '../../UI/Modal';
 import useInput from '../../../hooks/use-input';
 
 function AddFoodForm(props) {
+  const [selectedFile, setSelectedFile] = useState(null);
+
   const {
     value: enteredTitle,
     isValid: titleIsValid,
@@ -49,6 +51,7 @@ function AddFoodForm(props) {
 
     props.onConfirm({
       title: enteredTitle,
+      image: selectedFile,
       price: +enteredPrice,
       description: enteredDescription,
     });
@@ -56,6 +59,7 @@ function AddFoodForm(props) {
     titleReset();
     priceReset();
     descriptionReset();
+    setSelectedFile(null);
 
     props.onHideAddFoodFormHandler(false);
   };
@@ -86,6 +90,16 @@ function AddFoodForm(props) {
             max="100"
           />
           {titleIsInvalid && <p>Please enter a valid Title!</p>}
+        </div>
+
+        <div className={classes.control}>
+          <label htmlFor="file">Food Image</label>
+          <input
+            type="file"
+            id="file"
+            onChange={(e) => setSelectedFile(e.target.files[0])}           
+          />
+          {priceIsInvalid && <p>Please enter a valid Price!</p>}
         </div>
 
         <div className={priceInputclasses}>

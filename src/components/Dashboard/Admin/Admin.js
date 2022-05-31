@@ -4,9 +4,14 @@ import OrderSummary from './OrderSummary';
 import AddFoodForm from './AddFoodForm';
 import { useState } from 'react';
 import classes from './Admin.module.css'
+import { useSelector } from 'react-redux';
 
 const Admin = () => {
   const [showAddFoodForm, setShowAddFoodForm] = useState(false);
+
+  const stateAdminToken = useSelector(state => state.auth.adminToken);
+
+
   // This function will handle add food form
   const addFoodHandler = () => {
     setShowAddFoodForm(true);
@@ -16,18 +21,23 @@ const Admin = () => {
     setShowAddFoodForm(event);
   }
 
-
+  // TODO: 500 server error fix
   const formSubmitHandler = async (submitData) => {
+    let formData = new FormData();
+    // multer image name should be same as this 
+    formData.append('title', submitData.title);
+    formData.append('image', submitData.image);
+    formData.append('price', submitData.price);
+    formData.append('description', submitData.description);
 
     await fetch(
-      'https://react-http-597d3-default-rtdb.firebaseio.com/meals.json',
+      'http://localhost:8080/meals/add-meal',
       {
         method: 'POST',
-        body: JSON.stringify({
-          title: submitData.title,
-          price: submitData.price,
-          description: submitData.description,
-        }),
+        body: formData,
+        headers: {
+          Authorization: `Bearer ${stateAdminToken}`,
+        }
       }
     );
 
