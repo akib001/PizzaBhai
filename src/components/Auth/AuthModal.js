@@ -12,6 +12,7 @@ import Modal from '../UI/Modal';
 const AuthModal = (props) => {
   const enteredEmailRef = useRef();
   const enteredPasswordRef = useRef();
+  const enteredNameRef = useRef();
   const [isLogin, setIsLogin] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
   const [isAdminMode, setIsAdminMode] = useState(false);
@@ -29,11 +30,11 @@ const AuthModal = (props) => {
     signInWithGoogle()
       .then((result) => {
         if (isAdminMode) {
-          dispatch(authActions.adminLogin(result._tokenResponse.idToken));
+          dispatch(authActions.adminLogin(result._tokenResponse.token));
           dispatch(uiActions.toggleShowAuthHandler())  
           navigate('/admin');
         } else {
-          dispatch(authActions.userLogin(result._tokenResponse.idToken));
+          dispatch(authActions.userLogin(result._tokenResponse.token));
           dispatch(
             authActions.setUserProfile({
               name: result._tokenResponse.firstName,
@@ -53,50 +54,71 @@ const AuthModal = (props) => {
     event.preventDefault();
     const email = enteredEmailRef.current.value;
     const password = enteredPasswordRef.current.value;
+    const name = isLogin ? null : enteredNameRef.current.value;
     setIsLoading(true);
     let url;
     let bodyContent;
+    let method;
 
-    if (isLogin && error !== 'INVALID_PASSWORD') {
+    // User Login
+    if (isLogin && !isAdminMode) {
       url =
-        'https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyAL0N1DDE5PErh_25vFihwZzgbQ2cozKYY';
+        'http://localhost:8080/auth/user/login';
+      method = 'POST';  
       bodyContent = {
+        email,
+        password
+      };
+    }
+
+    // User Signup
+    if (!isLogin && !isAdminMode) {
+      url =
+        'http://localhost:8080/auth/user/signup';
+        method = 'PUT';    
+      bodyContent = {
+        name,
         email,
         password,
-        returnSecureToken: true,
+        userRole: true,
       };
-      console.log('login');
     }
 
-    if (!isLogin && error !== 'INVALID_PASSWORD') {
+    // Admin Login
+    if (isLogin && isAdminMode) {
       url =
-        'https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyAL0N1DDE5PErh_25vFihwZzgbQ2cozKYY';
+        'http://localhost:8080/auth/admin/login';
+      method = 'POST';  
       bodyContent = {
+        email,
+        password
+      };
+    }
+
+    // Admin Signup
+    if (!isLogin && isAdminMode) {
+      console.log('Admin Signup')
+      url =
+        'http://localhost:8080/auth/admin/signup';
+        method = 'PUT';    
+      bodyContent = {
+        name,
         email,
         password,
-        returnSecureToken: true,
+        adminRole: true,
       };
-      console.log('signup');
     }
 
-    if (error === 'INVALID_PASSWORD') {
-      url =
-        'https://identitytoolkit.googleapis.com/v1/accounts:sendOobCode?key=AIzaSyAL0N1DDE5PErh_25vFihwZzgbQ2cozKYY';
-      bodyContent = {
-        requestType: 'PASSWORD_RESET',
-        email,
-      };
-      console.log('reset');
-    }
+    console.log(bodyContent);
 
     fetch(url, {
-      method: 'POST',
-      body: JSON.stringify(bodyContent),
+      method: method,
       headers: {
         'Content-Type': 'application/json',
       },
+      body: JSON.stringify(bodyContent),
     })
-      .then((response) => {
+    .then((response) => {
         setIsLoading(false);
         if (response.ok) {
           return response.json();
@@ -112,16 +134,12 @@ const AuthModal = (props) => {
       })
       .then((data) => {
         console.log(data);
-        // const expirationTime = new Date(
-        //   new Date().getTime() + +data.expiresIn * 1000
-        // );
         if (isAdminMode) {
-          dispatch(authActions.adminLogin(data.idToken));
+          dispatch(authActions.adminLogin(data.token));
           dispatch(uiActions.toggleShowAuthHandler())
           navigate('/admin');
-
         } else {
-          dispatch(authActions.userLogin(data.idToken));
+          dispatch(authActions.userLogin(data.token));
           dispatch(
             authActions.setUserProfile({ name: 'User', email: data.email })
           );
@@ -171,6 +189,14 @@ const AuthModal = (props) => {
 
       <form onSubmit={submitHandler}>
         <div className={classes.control}>
+          {!isLogin && <><label htmlFor="name">First Name</label>
+          <input
+            onFocus={focusHandler}
+            type="text"
+            id="name"
+            required
+            ref={enteredNameRef}
+          /></>}
           <label htmlFor="email">Your Email</label>
           <input
             onFocus={focusHandler}
@@ -195,22 +221,19 @@ const AuthModal = (props) => {
             <p>{error}</p>
           </div>
         )}
-        {isLogin && error === 'INVALID_PASSWORD' && (
-          <button>Reset Password</button>
-        )}
         <div className={classes.actions}>
           {!isLoading && (
             <button type='submit'>{isLogin ? 'Login' : 'Create Account'}</button>
           )}
           {isLoading && <p>Loading...</p>}
-          <div className={classes.actions}>
+          {/* <div className={classes.actions}>
             <button
               className={classes['login-with-google-btn']}
               onClick={signInWithGoogleHandler}
             >
               {`Sign ${isLogin ? 'in' : 'up'} With Google`}
             </button>
-          </div>
+          </div> */}
           <button
             type="button"
             className={classes.toggle}
