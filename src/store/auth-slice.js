@@ -1,5 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 
+// TODO: Make token expired after 1 hour
 let initialUserToken = localStorage.getItem('userToken');
 let initialAdminToken = localStorage.getItem('adminToken');
 let retrivedUserName = localStorage.getItem('userName');

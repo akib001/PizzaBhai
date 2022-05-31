@@ -1,6 +1,6 @@
 import { useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { signInWithGoogle } from '../../firebase/Firebase';
+// import { signInWithGoogle } from '../../firebase/Firebase';
 import { useSelector, useDispatch } from 'react-redux';
 import { authActions } from '../../store/auth-slice';
 import React from 'react';
@@ -26,29 +26,29 @@ const AuthModal = (props) => {
     setIsLogin((prevState) => !prevState);
   };
 
-  const signInWithGoogleHandler = () => {
-    signInWithGoogle()
-      .then((result) => {
-        if (isAdminMode) {
-          dispatch(authActions.adminLogin(result._tokenResponse.token));
-          dispatch(uiActions.toggleShowAuthHandler())  
-          navigate('/admin');
-        } else {
-          dispatch(authActions.userLogin(result._tokenResponse.token));
-          dispatch(
-            authActions.setUserProfile({
-              name: result._tokenResponse.firstName,
-              email: result._tokenResponse.email,
-            })
-          );
-          dispatch(uiActions.toggleShowAuthHandler())
-          navigate('/user');
-        }
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  };
+  // const signInWithGoogleHandler = () => {
+  //   signInWithGoogle()
+  //     .then((result) => {
+  //       if (isAdminMode) {
+  //         dispatch(authActions.adminLogin(result._tokenResponse.token));
+  //         dispatch(uiActions.toggleShowAuthHandler())  
+  //         navigate('/admin');
+  //       } else {
+  //         dispatch(authActions.userLogin(result._tokenResponse.token));
+  //         dispatch(
+  //           authActions.setUserProfile({
+  //             name: result._tokenResponse.firstName,
+  //             email: result._tokenResponse.email,
+  //           })
+  //         );
+  //         dispatch(uiActions.toggleShowAuthHandler())
+  //         navigate('/user');
+  //       }
+  //     })
+  //     .catch((error) => {
+  //       console.log(error);
+  //     });
+  // };
 
   const submitHandler = (event) => {
     event.preventDefault();

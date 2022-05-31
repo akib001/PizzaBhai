@@ -110,8 +110,8 @@ function AddFoodForm(props) {
             onBlur={priceBlurHandler}
             onChange={priceChangeHandler}
             value={enteredPrice}
-            min="0.1" max="10"
-            step="0.01"            
+            min="1" max="10000"
+            step="1"            
           />
           {priceIsInvalid && <p>Please enter a valid Price!</p>}
         </div>

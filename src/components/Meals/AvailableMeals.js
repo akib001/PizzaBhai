@@ -29,7 +29,7 @@ const AvailableMeals = () => {
               id: item,
               title: data[key][item].title,
               description: data[key][item].description,
-              price: data[key][item].price,
+              price: +data[key][item].price,
             });
           }
         }
