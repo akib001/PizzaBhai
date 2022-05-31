@@ -109,8 +109,6 @@ const AuthModal = (props) => {
       };
     }
 
-    console.log(bodyContent);
-
     fetch(url, {
       method: method,
       headers: {
@@ -133,7 +131,6 @@ const AuthModal = (props) => {
         }
       })
       .then((data) => {
-        console.log(data);
         if (isAdminMode) {
           dispatch(authActions.adminLogin(data.token));
           dispatch(uiActions.toggleShowAuthHandler())

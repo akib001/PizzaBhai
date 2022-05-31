@@ -12,6 +12,9 @@ const Cart = props => {
   const stateTotalAmount = useSelector(state => state.cart.totalAmount)
   const stateTotalQuantity = useSelector(state => state.cart.totalQuantity)
   const stateItems = useSelector(state => state.cart.items)
+  const stateUserToken = useSelector(state => state.auth.userToken);
+  const stateAdminToken = useSelector(state => state.auth.adminToken);
+
   const [isCheckout, setIsCheckout] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [orderComplete, setOrderComplete] = useState(false);
@@ -38,7 +41,7 @@ const Cart = props => {
   const submitDataHandler = async data => {
     setIsLoading(true);
     await fetch(
-      'https://react-http-597d3-default-rtdb.firebaseio.com/orders.json',
+      'http://localhost:8080/orders/create-order',
       {
         method: 'POST',
         body: JSON.stringify({
@@ -47,6 +50,10 @@ const Cart = props => {
           totalOrderedPrice: stateTotalAmount,
           totalOrderedQuantity: stateTotalQuantity
         }),
+        headers: {
+          Authorization: `Bearer ${stateUserToken || stateAdminToken}`,
+          'Content-Type': 'application/json'
+        }
       }
     );
     setIsLoading(false);
@@ -72,10 +79,11 @@ const Cart = props => {
 
   const modalButton = (
     <div className={classes.actions}>
+      {!(stateUserToken || stateAdminToken) && <p className={classes.loginRequired}>Please login to make order</p>}
       <button className={classes['button--alt']} onClick={hideCartHandler}>
         Close
       </button>
-      {hasItems && (
+      {(hasItems && (stateUserToken || stateAdminToken))  && (
         <button className={classes.button} onClick={checkoutHandler}>
           Order
         </button>
