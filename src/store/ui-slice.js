@@ -3,7 +3,7 @@ import { createSlice } from '@reduxjs/toolkit';
 const initialCartSlice = {
   showCart: false,
   showAuth: false,
-  showAddFood: false
+  showEditForm: false
 };
 
 const uiSlice = createSlice({
@@ -17,13 +17,13 @@ const uiSlice = createSlice({
       state.showAuth = !state.showAuth;
     },
 
-    toggleShowAddFoodHandler(state) {
-      state.showAddFood = !state.showAddFood;
+    toggleshowEditFormHandler(state) {
+      state.showEditForm = !state.showEditForm;
     },
     closeAllModal(state) {
         state.showCart = false;
         state.showAuth = false;
-        state.showAddFood = false;
+        state.showEditForm = false;
     }
   },
 });

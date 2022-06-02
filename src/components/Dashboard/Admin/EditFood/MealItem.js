@@ -1,9 +1,15 @@
 import classes from './MealItem.module.css';
+import { useDispatch } from 'react-redux';
+import { uiActions } from '../../../../store/ui-slice';
 
 const MealItem = props => {
+  const dispatch = useDispatch();
+
+  const editFormHandler = () => {
+    dispatch(uiActions.toggleshowEditFormHandler())
+  }
 
   const price = `$${props.price.toFixed(2)}`;
-
 
   return (
     <li className={classes.meal}>
@@ -20,7 +26,7 @@ const MealItem = props => {
       <div>
         {/* <MealItemForm id={props.id} onAddToCart={addToCartHandler} /> */}
         <div className={classes.buttonContainer}>
-          <button className={classes.editBtn}>Edit</button>
+          <button className={classes.editBtn} onClick={editFormHandler}>Edit</button>
           <button className={classes.deleteBtn}>Delete</button>
         </div>
       </div>

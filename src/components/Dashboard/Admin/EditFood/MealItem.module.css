@@ -105,8 +105,8 @@
 .deleteBtn{
   font: inherit;
   cursor: pointer;
-  background-color: #8a2b06;
-  border: 1px solid #8a2b06;
+  background-color: #444;
+  border: 1px solid #111;
   color: white;
   padding: 0.25rem 1.25rem;
   border-radius: 20px;
@@ -116,10 +116,10 @@
 
 .deleteBtn:hover,
 .deleteBtn:active {
-  background-color: #641e03;
-  border-color: #641e03;
+  background-color: #000;
+  border-color: #444;
+  color: red;
 }
-
 
 
 @media screen and (min-width: 1600px) {
