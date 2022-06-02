@@ -31,8 +31,6 @@ const OrderList = () => {
         }
         const data = await response.json();
 
-        console.log(data);
-
         let loadedOrders = [];
 
         for (const key in data) {
@@ -80,8 +78,6 @@ const OrderList = () => {
       items={order.items}
     />
   ));
-
-  console.log(orders);
 
   let content = <p>Found no meals.</p>;
 

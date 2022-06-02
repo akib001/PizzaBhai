@@ -1,0 +1,135 @@
+.meal {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  margin: 1rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid #ccc;
+}
+
+.meal-info {
+  display: flex;
+  /* flex-direction: column; */
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.meal h3 {
+  margin: 1rem 0 0.25rem 0;
+  max-width: 10rem;
+}
+
+.description {
+  font-style: italic;
+  max-width: 10rem;
+}
+
+.price {
+  margin-top: 0.25rem;
+  font-weight: bold;
+  color: #ad5502;
+  font-size: 1.25rem;
+}
+
+.food-image {
+  width: 5rem;
+  height: 5rem;
+  margin-right: 2rem;
+}
+
+.food-image img {
+  object-fit: cover;
+  height: 100%;
+  width: 100%;
+}
+
+@media screen and (min-width: 500px) {
+  .meal h3 {
+    margin: 0 0 0.25rem 0;
+    max-width: 20rem;
+  }
+  
+  .description {
+    max-width: 20rem;
+  }
+}  
+
+@media screen and (min-width: 768px) {
+  .meal h3 {
+    max-width: 25rem;
+  }
+  
+  .description {
+    max-width: 25rem;
+  }
+
+  .meal {
+    flex-direction: row;
+  }
+
+  .food-image {
+    width: 7rem;
+    height: 7rem;
+  }  
+  
+}  
+
+.buttonContainer {
+  text-align: right;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.editBtn{
+  font: inherit;
+  cursor: pointer;
+  background-color: #8a2b06;
+  border: 1px solid #8a2b06;
+  color: white;
+  padding: 0.4rem 1.8rem;
+  border-radius: 20px;
+  font-weight: bold;
+  max-width: fit-content;
+  margin-bottom: 2.5rem;
+}
+
+.editBtn:hover,
+.editBtn:active {
+  background-color: #641e03;
+  border-color: #641e03;
+}
+
+.deleteBtn{
+  font: inherit;
+  cursor: pointer;
+  background-color: #8a2b06;
+  border: 1px solid #8a2b06;
+  color: white;
+  padding: 0.25rem 1.25rem;
+  border-radius: 20px;
+  font-weight: bold;
+  max-width: fit-content;
+}
+
+.deleteBtn:hover,
+.deleteBtn:active {
+  background-color: #641e03;
+  border-color: #641e03;
+}
+
+
+
+@media screen and (min-width: 1600px) {
+  .food-image {
+    width: 10rem;
+    height: 10rem;
+  }  
+
+  .meal h3 {
+    font-size: x-large;
+  }
+  
+}  

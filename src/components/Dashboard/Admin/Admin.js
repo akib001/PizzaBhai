@@ -3,6 +3,7 @@ import OrderList from './OrderList';
 import OrderSummary from './OrderSummary';
 import classes from './Admin.module.css';
 import AddNewFood from './AddNewFood';
+import ShowMeals from './EditFood/ShowMeals';
 
 const Admin = () => {
   const [selectedTab, setSelectedTab] = useState('orderList');
@@ -22,7 +23,7 @@ const Admin = () => {
   }
 
   if (selectedTab === 'editFoodItem') {
-    content = <h1>editFoodItem</h1>
+    content = <ShowMeals/>
   }
 
 
