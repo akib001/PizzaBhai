@@ -9,6 +9,8 @@ function UserDashboard() {
   const userName = useSelector((state) => state.auth.userName);
   const userEmail = useSelector((state) => state.auth.userEmail);
 
+  const stateUserToken = useSelector(state => state.auth.userToken);
+
   const [orders, setOrders] = useState([]);
   const [isError, setIsError] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
@@ -19,7 +21,12 @@ function UserDashboard() {
       setIsLoading(true);
       try {
         const response = await fetch(
-          'https://react-http-597d3-default-rtdb.firebaseio.com/orders.json'
+          'http://localhost:8080/orders/fetch-orders',
+          {
+            headers: {
+              Authorization: `Bearer ${stateUserToken}`,
+            },
+          }
         );
 
         if (!response.ok) {
@@ -61,7 +68,7 @@ function UserDashboard() {
       setIsLoading(false);
     }
     fetchOrdersHandler();
-  }, [userEmail]);
+  }, [userEmail, stateUserToken]);
 
   const userOrdersList = orders.map(order => (
     <UserOrder

@@ -20,8 +20,6 @@ const AvailableMeals = () => {
         }
         const data = await response.json();
 
-        console.log(data)
-
         let loadedMeals = [];
         
         for (const key in data) {
@@ -30,8 +28,9 @@ const AvailableMeals = () => {
             loadedMeals.push({
               id: item,
               title: data[key][item].title,
-              description: data[key][item].description,
+              imageUrl: data[key][item].imageUrl,
               price: +data[key][item].price,
+              description: data[key][item].description,
             });
           }
         }
@@ -49,6 +48,7 @@ const AvailableMeals = () => {
       key={meal.id}
       id={meal.id}
       title={meal.title}
+      imageUrl={meal.imageUrl}
       description={meal.description}
       price={meal.price}
     />

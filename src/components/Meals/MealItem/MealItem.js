@@ -2,7 +2,6 @@ import { useDispatch } from 'react-redux';
 import { cartActions } from '../../../store/cart-slice';
 import MealItemForm from './MealItemForm';
 import classes from './MealItem.module.css';
-import pizzaImage from '../../../assets/pizza/pizza1.jpg'
 
 const MealItem = props => {
   const dispatch = useDispatch();
@@ -25,7 +24,7 @@ const MealItem = props => {
     <li className={classes.meal}>
       <div className={classes['meal-info']}>
         <div className={classes['food-image']}>
-        <img src={pizzaImage} alt="" />
+        <img src={`http://localhost:8080/${props.imageUrl}`} alt="" />
         </div>
       <div>
         <h3>{props.title}</h3>

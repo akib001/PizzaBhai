@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
-import classes from './AddFoodForm.module.css';
-import Modal from '../../UI/Modal';
+import classes from './AddNewFood.module.css';
 import useInput from '../../../hooks/use-input';
+import { useSelector } from 'react-redux';
 
-
-function AddFoodForm(props) {
+function AddNewFood(props) {
+  const stateAdminToken = useSelector((state) => state.auth.adminToken);
   const [selectedFile, setSelectedFile] = useState(null);
   const {
     value: enteredTitle,
@@ -15,9 +15,6 @@ function AddFoodForm(props) {
     reset: titleReset,
   } = useInput((value) => value.trim() !== '');
 
-  const formCloseHandler = () => {
-    props.onHideAddFoodFormHandler(false);
-  };
   const {
     value: enteredPrice,
     isValid: priceIsValid,
@@ -42,26 +39,34 @@ function AddFoodForm(props) {
     formIsValid = true;
   }
 
-  const submitHandler = (submitData) => {
+  const submitHandler = async (submitData) => {
     submitData.preventDefault();
 
     if (!formIsValid) {
       return;
     }
 
-    props.onConfirm({
-      title: enteredTitle,
-      image: selectedFile,
-      price: +enteredPrice,
-      description: enteredDescription,
+    let formData = new FormData();
+    // multer image name should be same as this
+    formData.append('title', enteredTitle);
+    formData.append('image', selectedFile);
+    formData.append('price', +enteredPrice);
+    formData.append('description', enteredDescription);
+
+    await fetch('http://localhost:8080/meals/add-meal', {
+      method: 'POST',
+      body: formData,
+      headers: {
+        Authorization: `Bearer ${stateAdminToken}`,
+      },
     });
+
+    console.log('Food Added');
 
     titleReset();
     priceReset();
     descriptionReset();
     setSelectedFile(null);
-
-    props.onHideAddFoodFormHandler(false);
   };
 
   const titleInputclasses = titleIsInvalid
@@ -77,8 +82,8 @@ function AddFoodForm(props) {
     : classes.control;
 
   return (
-    <Modal>
-      <form action="" onSubmit={submitHandler}>
+    <div className={classes.container}>
+      <form className={classes.form} action="" onSubmit={submitHandler}>
         <div className={titleInputclasses}>
           <label htmlFor="title">Title</label>
           <input
@@ -97,7 +102,7 @@ function AddFoodForm(props) {
           <input
             type="file"
             id="file"
-            onChange={(e) => setSelectedFile(e.target.files[0])}           
+            onChange={(e) => setSelectedFile(e.target.files[0])}
           />
           {priceIsInvalid && <p>Please enter a valid Price!</p>}
         </div>
@@ -110,18 +115,25 @@ function AddFoodForm(props) {
             onBlur={priceBlurHandler}
             onChange={priceChangeHandler}
             value={enteredPrice}
-            min="1" max="10000"
-            step="1"            
+            min="1"
+            max="10000"
+            step="1"
           />
           {priceIsInvalid && <p>Please enter a valid Price!</p>}
         </div>
 
         <div className={descriptionInputclasses}>
           <label htmlFor="description">Description</label>
-          <textarea name="" id="description" cols="30" rows="10" max="500"
+          <textarea
+            name=""
+            id="description"
+            cols="30"
+            rows="10"
+            max="500"
             onBlur={descriptionBlurHandler}
             onChange={descriptionChangeHandler}
-            value={enteredDescription}></textarea>
+            value={enteredDescription}
+          ></textarea>
           {descriptionIsInvalid && <p>Please enter a Description!</p>}
         </div>
 
@@ -129,13 +141,10 @@ function AddFoodForm(props) {
           <button className={classes.submit} type="submit">
             Add Food
           </button>
-          <button onClick={formCloseHandler} type="button">
-            Close
-          </button>
         </div>
       </form>
-    </Modal>
+    </div>
   );
 }
 
-export default AddFoodForm;
+export default AddNewFood;

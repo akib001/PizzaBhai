@@ -7,7 +7,7 @@ import { authActions } from '../../../store/auth-slice';
 
 const OrderList = () => {
   const dispatch = useDispatch();
-  const stateAdminToken = useSelector(state => state.auth.adminToken);
+  const stateAdminToken = useSelector((state) => state.auth.adminToken);
   const [orders, setOrders] = useState([]);
   const [isError, setIsError] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
@@ -18,10 +18,11 @@ const OrderList = () => {
       setIsLoading(true);
       try {
         const response = await fetch(
-          'http://localhost:8080/orders/fetch-orders', {
+          'http://localhost:8080/orders/fetch-orders',
+          {
             headers: {
               Authorization: `Bearer ${stateAdminToken}`,
-            }
+            },
           }
         );
 
@@ -33,7 +34,7 @@ const OrderList = () => {
         console.log(data);
 
         let loadedOrders = [];
-        
+
         for (const key in data) {
           let loadedItems = [];
           for (const itemKey in data[key].orderData) {
@@ -42,15 +43,17 @@ const OrderList = () => {
               itemName: data[key].orderData[itemKey].title,
               itemPrice: data[key].orderData[itemKey].price,
               itemQuantity: data[key].orderData[itemKey].quantity,
-            })
+            });
           }
 
-          dispatch(authActions.calculateOrderSummary({
-            totalQuantity: data[key].totalOrderedQuantity,
-            totalPrice: data[key].totalOrderedPrice
-          }))
+          // TODO: /admin order summary problem
 
-
+          dispatch(
+            authActions.calculateOrderSummary({
+              totalQuantity: data[key].totalOrderedQuantity,
+              totalPrice: data[key].totalOrderedPrice,
+            })
+          );
 
           loadedOrders.push({
             id: key,
@@ -66,9 +69,9 @@ const OrderList = () => {
       setIsLoading(false);
     }
     fetchOrdersHandler();
-  }, [dispatch]);
+  }, [dispatch, stateAdminToken]);
 
-  const ordersList = orders.map(order => (      
+  const ordersList = orders.map((order) => (
     <Order
       key={order.id}
       id={order.id}
@@ -93,7 +96,6 @@ const OrderList = () => {
   if (isLoading) {
     content = <p>Loading...</p>;
   }
-
 
   return (
     <section className={classes.orders}>

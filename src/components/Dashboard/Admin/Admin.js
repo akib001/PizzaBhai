@@ -1,53 +1,54 @@
-import { Fragment } from 'react';
+import { Fragment, useState } from 'react';
 import OrderList from './OrderList';
 import OrderSummary from './OrderSummary';
-import AddFoodForm from './AddFoodForm';
-import { useState } from 'react';
-import classes from './Admin.module.css'
-import { useSelector, useDispatch } from 'react-redux';
-import { uiActions } from '../../../store/ui-slice';
+import classes from './Admin.module.css';
+import AddNewFood from './AddNewFood';
 
 const Admin = () => {
-  const dispatch = useDispatch();
+  const [selectedTab, setSelectedTab] = useState('orderList');
 
-  const stateAdminToken = useSelector(state => state.auth.adminToken);
-  const stateShowAddFood = useSelector(state => state.ui.showAddFood);
-
-  const toggleShowAddFoodHandler = () => {
-    dispatch(uiActions.toggleShowAddFoodHandler());
+  const tabsHandler = e => {
+    setSelectedTab(e.target.value);
   }
 
-  const formSubmitHandler = async (submitData) => {
-    let formData = new FormData();
-    // multer image name should be same as this 
-    formData.append('title', submitData.title);
-    formData.append('image', submitData.image);
-    formData.append('price', submitData.price);
-    formData.append('description', submitData.description);
+  let content;
 
-    await fetch(
-      'http://localhost:8080/meals/add-meal',
-      {
-        method: 'POST',
-        body: formData,
-        headers: {
-          Authorization: `Bearer ${stateAdminToken}`,
-        }
-      }
-    );
+  if (selectedTab === 'orderList') {
+    content = <OrderList />
+  }
 
-    console.log('Food Added');
-  };
+  if (selectedTab === 'addNewFood') {
+    content = <AddNewFood/>
+  }
+
+  if (selectedTab === 'editFoodItem') {
+    content = <h1>editFoodItem</h1>
+  }
+
 
   return (
     <Fragment>
       <OrderSummary />
       <div className={classes.container}>
-        <button onClick={toggleShowAddFoodHandler}>Add New Food Item</button>
+        <div className={classes.tabs}>
+          <input type="radio" id="orderList" onChange={tabsHandler} value='orderList' name="tabs"  />
+          <label className={classes.tab} htmlFor="orderList">
+            Order List
+          </label>
+          <input type="radio" id="addNewFood" onChange={tabsHandler} value='addNewFood' name="tabs" />
+          <label className={classes.tab} htmlFor="addNewFood">
+            Add New Food
+          </label>
+          <input type="radio" id="editFoodItem" onChange={tabsHandler} value='editFoodItem' name="tabs" />
+          <label className={classes.tab} htmlFor="editFoodItem">
+            Edit Food Item
+          </label>
+          <span className={classes.glider}></span>
+        </div>
       </div>
+
+      {content}
       
-      {stateShowAddFood && <AddFoodForm onConfirm={formSubmitHandler} onHideAddFoodFormHandler={toggleShowAddFoodHandler} />}
-      <OrderList />
     </Fragment>
   );
 };

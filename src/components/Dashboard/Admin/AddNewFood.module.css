@@ -1,7 +1,17 @@
+.container {
+  padding: 1rem;
+  max-width: fit-content;
+  margin: auto;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+  border-radius: 14px;
+  background-color: white; 
+  animation: orders-appear 1s ease-out forwards;
+}
+
 .form {
-    margin: 1rem 0;
-    height: 19rem;
+    margin: 0;
     overflow: auto;
+    
   }
   
   .control {
@@ -18,7 +28,7 @@
     font: inherit;
     border: 1px solid #ccc;
     border-radius: 4px;
-    width: 20rem;
+    width: 45rem;
     max-width: 100%;
   }
   
@@ -62,3 +72,16 @@
     border-color: #aa0b20;
     background-color: #ffeff1;
   }
+
+  @keyframes orders-appear {
+    from {
+      opacity: 0;
+      transform: translateY(3rem);
+    }
+  
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
