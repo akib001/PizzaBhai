@@ -2,8 +2,11 @@ import React, { useState } from 'react';
 import classes from './AddNewFood.module.css';
 import useInput from '../../../hooks/use-input';
 import { useSelector } from 'react-redux';
+import { useRef } from 'react';
 
 function AddNewFood(props) {
+  const fileInputRef = useRef(null);
+
   const stateAdminToken = useSelector((state) => state.auth.adminToken);
   const [selectedFile, setSelectedFile] = useState(null);
   const {
@@ -67,6 +70,7 @@ function AddNewFood(props) {
     priceReset();
     descriptionReset();
     setSelectedFile(null);
+    fileInputRef.current.value = null;
   };
 
   const titleInputclasses = titleIsInvalid
@@ -100,6 +104,7 @@ function AddNewFood(props) {
         <div className={classes.control}>
           <label htmlFor="file">Food Image</label>
           <input
+            ref={fileInputRef}
             type="file"
             id="file"
             onChange={(e) => setSelectedFile(e.target.files[0])}
