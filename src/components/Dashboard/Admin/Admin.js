@@ -30,7 +30,6 @@ const Admin = () => {
     content = <ShowMeals/>
   }
 
-
   return (
     <Fragment>
       <OrderSummary />

@@ -1,101 +1,64 @@
 import React, { useState } from 'react';
 import classes from './EditFoodModal.module.css';
-import useInput from '../../../../hooks/use-input';
 import Modal from '../../../UI/Modal'
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { uiActions } from '../../../../store/ui-slice';
 
 function EditFoodModal(props) {
+  const dispatch = useDispatch();
+
   const stateAdminToken = useSelector((state) => state.auth.adminToken);
+  const stateEditFormData = useSelector(state => state.ui.editFormData);
   const [selectedFile, setSelectedFile] = useState(null);
-  const {
-    value: enteredTitle,
-    isValid: titleIsValid,
-    isInvalid: titleIsInvalid,
-    valueChangeHandler: titleChangeHandler,
-    valueChangeBlueHandler: titleBlurHandler,
-    reset: titleReset,
-  } = useInput((value) => value.trim() !== '');
 
-  const {
-    value: enteredPrice,
-    isValid: priceIsValid,
-    isInvalid: priceIsInvalid,
-    valueChangeHandler: priceChangeHandler,
-    valueChangeBlueHandler: priceBlurHandler,
-    reset: priceReset,
-  } = useInput((value) => value.trim() !== '');
-
-  const {
-    value: enteredDescription,
-    isValid: descriptionIsValid,
-    isInvalid: descriptionIsInvalid,
-    valueChangeHandler: descriptionChangeHandler,
-    valueChangeBlueHandler: descriptionBlurHandler,
-    reset: descriptionReset,
-  } = useInput((value) => value.trim() !== '');
-
-  let formIsValid = false;
-
-  if (titleIsValid && priceIsValid && descriptionIsValid) {
-    formIsValid = true;
+  // TODO: A component is changing a controlled input to be uncontrolled.
+  const inputChangeHandler = e => {
+    dispatch(uiActions.updateEditFormData({
+      type: e.target.name,
+      newData: e.target.value
+    }))
   }
 
   const submitHandler = async (submitData) => {
     submitData.preventDefault();
 
-    if (!formIsValid) {
-      return;
-    }
-
+    console.log(selectedFile);
     let formData = new FormData();
     // multer image name should be same as this
-    formData.append('title', enteredTitle);
+    formData.append('title', stateEditFormData.title);
     formData.append('image', selectedFile);
-    formData.append('price', +enteredPrice);
-    formData.append('description', enteredDescription);
+    formData.append('price', +stateEditFormData.price);
+    formData.append('description', stateEditFormData.description);
+    formData.append('adminId', stateEditFormData.adminId);
+    formData.append('id', stateEditFormData.id);
 
-    await fetch('http://localhost:8080/meals/add-meal', {
-      method: 'POST',
+    await fetch(`http://localhost:8080/meals/update-meal/${stateEditFormData.id}`, {
+      method: 'PUT',
       body: formData,
       headers: {
         Authorization: `Bearer ${stateAdminToken}`,
       },
     });
 
-    console.log('Food Added');
-
-    titleReset();
-    priceReset();
-    descriptionReset();
-    setSelectedFile(null);
+    console.log('Food Edited');
+    dispatch(uiActions.closeAllModal());
+    dispatch(uiActions.toggleRenderMealList());
   };
-
-  const titleInputclasses = titleIsInvalid
-    ? `${classes.invalid} ${classes.control}`
-    : classes.control;
-
-  const priceInputclasses = priceIsInvalid
-    ? `${classes.invalid} ${classes.control}`
-    : classes.control;
-
-  const descriptionInputclasses = descriptionIsInvalid
-    ? `${classes.invalid} ${classes.control}`
-    : classes.control;
 
   return (
     <Modal>
       <form className={classes.form} action="" onSubmit={submitHandler}>
-        <div className={titleInputclasses}>
+        <div className={classes.control}>
           <label htmlFor="title">Title</label>
           <input
             type="text"
             id="title"
-            onBlur={titleBlurHandler}
-            onChange={titleChangeHandler}
-            value={enteredTitle}
+            name='title'
+            onChange={inputChangeHandler}
+            value={stateEditFormData.title}
             max="100"
           />
-          {titleIsInvalid && <p>Please enter a valid Title!</p>}
+  
         </div>
 
         <div className={classes.control}>
@@ -105,42 +68,39 @@ function EditFoodModal(props) {
             id="file"
             onChange={(e) => setSelectedFile(e.target.files[0])}
           />
-          {priceIsInvalid && <p>Please enter a valid Price!</p>}
+  
         </div>
 
-        <div className={priceInputclasses}>
+        <div className={classes.control}>
           <label htmlFor="price">Price</label>
           <input
             type="number"
             id="price"
-            onBlur={priceBlurHandler}
-            onChange={priceChangeHandler}
-            value={enteredPrice}
+            name='price'
+            onChange={inputChangeHandler}
+            value={stateEditFormData.price}
             min="1"
             max="10000"
             step="1"
           />
-          {priceIsInvalid && <p>Please enter a valid Price!</p>}
+        
         </div>
 
-        <div className={descriptionInputclasses}>
+        <div className={classes.control}>
           <label htmlFor="description">Description</label>
           <textarea
-            name=""
             id="description"
+            name='description'
             cols="30"
             rows="10"
             max="500"
-            onBlur={descriptionBlurHandler}
-            onChange={descriptionChangeHandler}
-            value={enteredDescription}
-          ></textarea>
-          {descriptionIsInvalid && <p>Please enter a Description!</p>}
+            onChange={inputChangeHandler}
+            value={stateEditFormData.description}
+          ></textarea>  
         </div>
-
         <div className={classes.actions}>
           <button className={classes.submit} type="submit">
-            Add Food
+            Update Food
           </button>
         </div>
       </form>

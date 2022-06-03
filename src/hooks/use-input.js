@@ -35,7 +35,7 @@ const useInput = validateValue => {
     dispatch({ type: 'INPUT', value: event.target.value });
   };
 
-  const valueChangeBlueHandler = () => {
+  const valueChangeBlueHandler = () => {  
     dispatch({ type: 'BLUR' });
   };
 
