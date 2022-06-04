@@ -5,16 +5,20 @@ import Modal from '../UI/Modal';
 import CartItem from './CartItem';
 import classes from './Cart.module.css';
 import CheckoutForm from './CheckoutForm';
+import { uiActions } from '../../store/ui-slice';
 
 const Cart = props => {
   const dispatch = useDispatch();
   const stateTotalAmount = useSelector(state => state.cart.totalAmount)
   const stateItems = useSelector(state => state.cart.items)
+  const stateUserToken = useSelector(state => state.auth.userToken);
+  const stateAdminToken = useSelector(state => state.auth.adminToken);
+
   const [isCheckout, setIsCheckout] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [orderComplete, setOrderComplete] = useState(false);
 
-  const totalAmount = `$${stateTotalAmount.toFixed(2)}`;
+  const totalAmount = `৳${stateTotalAmount.toFixed(0)}`;
   const hasItems = stateItems.length > 0;
 
   const cartItemRemoveHandler = id => {
@@ -29,16 +33,24 @@ const Cart = props => {
     setIsCheckout(true);
   };
 
+  const hideCartHandler = () => {
+    dispatch(uiActions.toggleShowCartHandler())
+  }
+
   const submitDataHandler = async data => {
     setIsLoading(true);
     await fetch(
-      'https://react-http-597d3-default-rtdb.firebaseio.com/orders.json',
+      'https://pizzabhai-server.herokuapp.com/orders/create-order',
       {
         method: 'POST',
         body: JSON.stringify({
           userData: data,
           orderData: stateItems,
         }),
+        headers: {
+          Authorization: `Bearer ${stateUserToken || stateAdminToken}`,
+          'Content-Type': 'application/json'
+        }
       }
     );
     setIsLoading(false);
@@ -64,10 +76,11 @@ const Cart = props => {
 
   const modalButton = (
     <div className={classes.actions}>
-      <button className={classes['button--alt']} onClick={props.onClose}>
+      {!(stateUserToken || stateAdminToken) && <p className={classes.loginRequired}>Please login to make order</p>}
+      <button className={classes['button--alt']} onClick={hideCartHandler}>
         Close
       </button>
-      {hasItems && (
+      {(hasItems && (stateUserToken || stateAdminToken))  && (
         <button className={classes.button} onClick={checkoutHandler}>
           Order
         </button>
@@ -83,7 +96,7 @@ const Cart = props => {
         <span>{totalAmount}</span>
       </div>
       {isCheckout && (
-        <CheckoutForm onConfirm={submitDataHandler} onCancel={props.onClose} />
+        <CheckoutForm onConfirm={submitDataHandler} onCancel={hideCartHandler} />
       )}
       {!isCheckout && modalButton}
     </React.Fragment>
@@ -94,13 +107,13 @@ const Cart = props => {
   const orderCompleteModal = <React.Fragment>
     <p>Order Complete!</p>
     <div className={classes.actions}>
-      <button className={classes.button} onClick={props.onClose}>
+      <button className={classes.button} onClick={hideCartHandler}>
         Close
       </button>
     </div>
   </React.Fragment>
 
-  return <Modal onClose={props.onClose}>
+  return <Modal>
     {!isLoading && !orderComplete && cartModal}
     {isLoading && loadingModal}
     {orderComplete && !isLoading && orderCompleteModal}

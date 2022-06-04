@@ -1,10 +1,21 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-let initialToken = localStorage.getItem('token');
+// TODO: Make token expired after 1 hour
+let initialUserToken = localStorage.getItem('userToken');
+let initialAdminToken = localStorage.getItem('adminToken');
+let retrivedUserName = localStorage.getItem('userName');
+let retrivedUserEmail = localStorage.getItem('userEmail');
 
 const initialState = {
-  token: initialToken,
-  isLoggedIn: false,
+  userToken: initialUserToken,
+  adminToken: initialAdminToken,
+
+  userLoggedIn: false,
+  adminLoggedIn: false,
+
+  userName: retrivedUserName,
+  userEmail: retrivedUserEmail,
+
   error: '',
   totalOrderedPrice: 0,
   totalOrderedAmount: 0
@@ -15,9 +26,10 @@ const authSlice = createSlice({
   initialState: initialState,
   reducers: {
     isUserLoggedIn(state) {
-      state.isLoggedIn = !!state.token;
+      state.userLoggedIn = !!state.userToken;
     },
 
+<<<<<<< HEAD
     login(state, action) {
         state.token = action.payload;
         localStorage.setItem('token', state.token);
@@ -28,6 +40,44 @@ const authSlice = createSlice({
         localStorage.removeItem('token');
         state.totalOrderedPrice= 0;
         state.totalOrderedAmount= 0;
+=======
+    isAdminLoggedIn(state) {
+      state.adminLoggedIn = !!state.adminToken;
+    },
+
+    userLogin(state, action) {
+      state.userToken = action.payload;
+      localStorage.setItem('userToken', state.userToken);
+    },
+
+    adminLogin(state, action) {
+      state.adminToken = action.payload;
+      localStorage.setItem('adminToken', state.adminToken);
+    },
+
+    userLogout(state) {
+      state.userToken = '';
+      localStorage.removeItem('userToken');
+      state.totalOrderedQuantity = 0;
+      state.totalOrderedPrice = 0;
+
+      state.userName = '';
+      state.userEmail = '';
+    },
+
+    adminLogout(state) {
+      state.adminToken = '';
+      localStorage.removeItem('adminToken');
+      state.totalOrderedQuantity = 0;
+      state.totalOrderedPrice = 0;
+    },
+
+    setUserProfile(state, action) {
+      state.userName = action.payload.name;
+      state.userEmail = action.payload.email;
+      localStorage.setItem('userName', state.userName);
+      localStorage.setItem('userEmail', state.userEmail);
+>>>>>>> Development
     },
 
     setError(state, action) {

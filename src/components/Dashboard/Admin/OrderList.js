@@ -1,9 +1,18 @@
-import Card from '../UI/Card';
+import Card from '../../UI/Card';
 import classes from './OrderList.module.css';
 import Order from './Order';
 import { useState, useEffect } from 'react';
+<<<<<<< HEAD:src/components/Dashboard/OrderList.js
 
 const OrderList = () => {
+=======
+import { useDispatch, useSelector } from 'react-redux';
+import { authActions } from '../../../store/auth-slice';
+
+const OrderList = () => {
+  const dispatch = useDispatch();
+  const stateAdminToken = useSelector((state) => state.auth.adminToken);
+>>>>>>> Development:src/components/Dashboard/Admin/OrderList.js
   const [orders, setOrders] = useState([]);
   const [isError, setIsError] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
@@ -14,7 +23,12 @@ const OrderList = () => {
       setIsLoading(true);
       try {
         const response = await fetch(
-          'https://react-http-597d3-default-rtdb.firebaseio.com/orders.json'
+          'https://pizzabhai-server.herokuapp.com/orders/fetch-orders',
+          {
+            headers: {
+              Authorization: `Bearer ${stateAdminToken}`,
+            },
+          }
         );
 
         if (!response.ok) {
@@ -22,10 +36,8 @@ const OrderList = () => {
         }
         const data = await response.json();
 
-        // console.log(data);
-
         let loadedOrders = [];
-        
+
         for (const key in data) {
           let loadedItems = [];
           for (const itemKey in data[key].orderData) {
@@ -33,10 +45,26 @@ const OrderList = () => {
               itemId: itemKey,
               itemName: data[key].orderData[itemKey].name,
               itemPrice: data[key].orderData[itemKey].price,
+<<<<<<< HEAD:src/components/Dashboard/OrderList.js
               itemAmount: data[key].orderData[itemKey].amount,
             })
           }
 
+=======
+              itemQuantity: data[key].orderData[itemKey].quantity,
+            });
+          }
+
+          // TODO: /admin order summary problem
+
+          dispatch(
+            authActions.calculateOrderSummary({
+              totalQuantity: data[key].totalOrderedQuantity,
+              totalPrice: data[key].totalOrderedPrice,
+            })
+          );
+
+>>>>>>> Development:src/components/Dashboard/Admin/OrderList.js
           loadedOrders.push({
             id: key,
             name: data[key].userData.name,
@@ -51,11 +79,17 @@ const OrderList = () => {
       setIsLoading(false);
     }
     fetchOrdersHandler();
+<<<<<<< HEAD:src/components/Dashboard/OrderList.js
   }, []);
 
   const ordersList = orders.map(order => (  
     
 
+=======
+  }, [dispatch, stateAdminToken]);
+
+  const ordersList = orders.map((order) => (
+>>>>>>> Development:src/components/Dashboard/Admin/OrderList.js
     <Order
       key={order.id}
       id={order.id}
@@ -65,7 +99,7 @@ const OrderList = () => {
     />
   ));
 
-  let content = <p>Found no meals.</p>;
+  let content = <p>Found no order.</p>;
 
   if (ordersList.length > 0) {
     content = ordersList;
@@ -78,7 +112,6 @@ const OrderList = () => {
   if (isLoading) {
     content = <p>Loading...</p>;
   }
-
 
   return (
     <section className={classes.orders}>

@@ -2,11 +2,13 @@
   display: flex;
   align-items: center;
   margin-bottom: 0.5rem;
+  margin-top: 0.5rem;
 }
 
 .input label {
   font-weight: bold;
   margin-right: 1rem;
+  
 }
 
 .input input {

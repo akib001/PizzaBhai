@@ -20,6 +20,8 @@ const inputStateReducer = (state, action) => {
   return inputStateReducer;
 };
 
+//validateValue is a function which will be received from components
+
 const useInput = validateValue => {
   const [inputState, dispatch] = useReducer(
     inputStateReducer,
@@ -33,7 +35,7 @@ const useInput = validateValue => {
     dispatch({ type: 'INPUT', value: event.target.value });
   };
 
-  const valueChangeBlueHandler = () => {
+  const valueChangeBlueHandler = () => {  
     dispatch({ type: 'BLUR' });
   };
 

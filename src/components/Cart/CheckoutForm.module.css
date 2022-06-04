@@ -1,6 +1,11 @@
 .form {
   margin: 1rem 0;
-  height: 19rem;
+  max-height: 19rem;
+
+}
+
+.scroll {
+  max-height: 10rem;
   overflow: auto;
 }
 
@@ -62,3 +67,22 @@
   border-color: #aa0b20;
   background-color: #ffeff1;
 }
+
+@media screen and (min-width: 500px) {
+  .scroll {
+    max-height: 12rem;
+  }
+}  
+
+
+@media screen and (min-width: 1600px) {
+  .scroll {
+    max-height: 20rem;
+  }
+}  
+
+@media screen and (min-width: 1900px) {
+  .scroll {
+    max-height: 25rem;
+  }
+}  

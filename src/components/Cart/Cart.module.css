@@ -6,6 +6,12 @@
   overflow: auto;
 }
 
+.loginRequired {
+  text-align: right;
+  font-size: 1.3rem;
+  font-weight: 500;
+}
+
 .total {
   display: flex;
   justify-content: space-between;

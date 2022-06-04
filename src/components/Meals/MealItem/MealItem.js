@@ -6,7 +6,7 @@ import classes from './MealItem.module.css';
 const MealItem = props => {
   const dispatch = useDispatch();
 
-  const price = `$${props.price.toFixed(2)}`;
+  const price = `৳${props.price.toFixed(0)}`;
 
   const addToCartHandler = amount => {
     dispatch(
@@ -22,10 +22,15 @@ const MealItem = props => {
 
   return (
     <li className={classes.meal}>
+      <div className={classes['meal-info']}>
+        <div className={classes['food-image']}>
+        <img src={`https://pizzabhai-server.herokuapp.com/${props.imageUrl}`} alt="" />
+        </div>
       <div>
         <h3>{props.title}</h3>
         <div className={classes.description}>{props.description}</div>
         <div className={classes.price}>{price}</div>
+      </div>
       </div>
       <div>
         <MealItemForm id={props.id} onAddToCart={addToCartHandler} />

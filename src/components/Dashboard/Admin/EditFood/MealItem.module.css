@@ -70,11 +70,56 @@
   .food-image {
     width: 7rem;
     height: 7rem;
-  }
-
-  
+  }  
   
 }  
+
+.buttonContainer {
+  text-align: right;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.editBtn{
+  font: inherit;
+  cursor: pointer;
+  background-color: #8a2b06;
+  border: 1px solid #8a2b06;
+  color: white;
+  padding: 0.4rem 1.8rem;
+  border-radius: 20px;
+  font-weight: bold;
+  max-width: fit-content;
+  margin-bottom: 2.5rem;
+}
+
+.editBtn:hover,
+.editBtn:active {
+  background-color: #641e03;
+  border-color: #641e03;
+}
+
+.deleteBtn{
+  font: inherit;
+  cursor: pointer;
+  background-color: #444;
+  border: 1px solid #111;
+  color: white;
+  padding: 0.25rem 1.25rem;
+  border-radius: 20px;
+  font-weight: bold;
+  max-width: fit-content;
+}
+
+.deleteBtn:hover,
+.deleteBtn:active {
+  background-color: #000;
+  border-color: #444;
+  color: red;
+}
 
 
 @media screen and (min-width: 1600px) {
