@@ -79,7 +79,7 @@ const OrderList = () => {
     />
   ));
 
-  let content = <p>Found no meals.</p>;
+  let content = <p>Found no order.</p>;
 
   if (ordersList.length > 0) {
     content = ordersList;

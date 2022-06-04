@@ -58,7 +58,6 @@ function EditFoodModal(props) {
             value={stateEditFormData.title}
             max="100"
           />
-  
         </div>
 
         <div className={classes.control}>
@@ -67,10 +66,8 @@ function EditFoodModal(props) {
             type="file"
             id="file"
             onChange={(e) => setSelectedFile(e.target.files[0])}
-          />
-  
+          /> 
         </div>
-
         <div className={classes.control}>
           <label htmlFor="price">Price</label>
           <input

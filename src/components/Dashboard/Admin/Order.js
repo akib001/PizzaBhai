@@ -43,7 +43,7 @@ const Order = props => {
           </h4>
         </div>
         <div>
-          <div className={classes.price}>${totalPrice.toFixed(2)}</div>
+          <div className={classes.price}>৳{totalPrice.toFixed(0)}</div>
           <button onClick={showItemsHandler}>{showItems ? 'Hide' : 'Show'} Items</button>
         </div>
       </li>
