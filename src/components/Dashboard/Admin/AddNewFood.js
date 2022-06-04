@@ -56,7 +56,7 @@ function AddNewFood(props) {
     formData.append('price', +enteredPrice);
     formData.append('description', enteredDescription);
 
-    await fetch('http://localhost:8080/meals/add-meal', {
+    await fetch('https://pizzabhai-server.herokuapp.com/meals/add-meal', {
       method: 'POST',
       body: formData,
       headers: {

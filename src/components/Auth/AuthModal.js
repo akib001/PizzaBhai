@@ -39,7 +39,7 @@ const AuthModal = (props) => {
     // User Login
     if (isLogin && !isAdminMode) {
       url =
-        'http://localhost:8080/auth/user/login';
+        'https://pizzabhai-server.herokuapp.com/auth/user/login';
       method = 'POST';  
       bodyContent = {
         email,
@@ -50,7 +50,7 @@ const AuthModal = (props) => {
     // User Signup
     if (!isLogin && !isAdminMode) {
       url =
-        'http://localhost:8080/auth/user/signup';
+        'https://pizzabhai-server.herokuapp.com/auth/user/signup';
         method = 'PUT';    
       bodyContent = {
         name,
@@ -63,7 +63,7 @@ const AuthModal = (props) => {
     // Admin Login
     if (isLogin && isAdminMode) {
       url =
-        'http://localhost:8080/auth/admin/login';
+        'https://pizzabhai-server.herokuapp.com/auth/admin/login';
       method = 'POST';  
       bodyContent = {
         email,
@@ -75,7 +75,7 @@ const AuthModal = (props) => {
     if (!isLogin && isAdminMode) {
       console.log('Admin Signup')
       url =
-        'http://localhost:8080/auth/admin/signup';
+        'https://pizzabhai-server.herokuapp.com/auth/admin/signup';
         method = 'PUT';    
       bodyContent = {
         name,

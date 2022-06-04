@@ -19,7 +19,7 @@ const Cart = props => {
   const [isLoading, setIsLoading] = useState(false);
   const [orderComplete, setOrderComplete] = useState(false);
 
-  const totalAmount = `$${stateTotalAmount.toFixed(2)}`;
+  const totalAmount = `৳${stateTotalAmount.toFixed(0)}`;
   const hasItems = stateItems.length > 0;
 
   const cartItemRemoveHandler = id => {
@@ -41,7 +41,7 @@ const Cart = props => {
   const submitDataHandler = async data => {
     setIsLoading(true);
     await fetch(
-      'http://localhost:8080/orders/create-order',
+      'https://pizzabhai-server.herokuapp.com/orders/create-order',
       {
         method: 'POST',
         body: JSON.stringify({
