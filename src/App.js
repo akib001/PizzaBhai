@@ -1,12 +1,6 @@
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-<<<<<<< HEAD
-import { sendCartData } from './store/cart-actions';
-import { fetchCartData } from './store/cart-actions';
-import React from 'react';
-=======
 import React, {Suspense} from 'react';
->>>>>>> Development
 import Layout from './components/Layout/Layout';
 import AuthPage from './pages/AuthPage'
 import AdminDashboard from './pages/AdminDashboard';
@@ -14,13 +8,10 @@ import AdminDashboard from './pages/AdminDashboard';
 import { Route, Routes } from 'react-router-dom';
 import HomePage from './pages/HomePage';
 import {Navigate} from 'react-router-dom';
-<<<<<<< HEAD
-=======
 import { cartActions } from './store/cart-slice';
 const AdminDashboard = React.lazy(() => import('./pages/AdminDashboardPage'));
 const UserDashboard = React.lazy(() => import('./pages/UserDashboardPage'));
 
->>>>>>> Development
 let runFirstTime = true;
 
 function App() {

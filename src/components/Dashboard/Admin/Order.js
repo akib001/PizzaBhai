@@ -1,38 +1,37 @@
 import classes from './Order.module.css';
-import { useDispatch } from 'react-redux';
-import { authActions } from '../../store/auth-slice';
+import React from 'react';
+import { useState } from 'react';
 
-const Order = (props) => {
-    const dispatch = useDispatch();
-    const cartItems = props.items;
+const Order = props => {
+  const cartItems = props.items;
+  const [showItems, setShowItems] = useState(false);
 
-    let totalPrice = 0;
-    let totalQuantity = 0;
+  let totalPrice = 0;
+  let totalQuantity = 0;
 
-    for (const key in cartItems) {
-      totalPrice += (cartItems[key].itemPrice * cartItems[key].itemAmount);
-      totalQuantity += cartItems[key].itemAmount;
-      dispatch(authActions.calculateTotalOrders(totalPrice));
-      dispatch(authActions.calculateTotalOrderedAmount(totalQuantity));
+  for (const key in cartItems) {
+    totalPrice += cartItems[key].itemPrice * cartItems[key].itemQuantity;
+    totalQuantity += cartItems[key].itemQuantity;
+  }
+
+  const showItemsHandler = () => {
+    if (showItems) {
+      setShowItems(false);
+    } else {
+      setShowItems(true);
     }
+  };
 
-   
-    return <li className={classes.order}>
-    <div>
-      <h3>{props.name}</h3>
-      <div className={classes.address}>{props.street}</div>
-      <h4>Total Quantity: <span>{totalQuantity}</span></h4>
-    </div>
-    <div>
-      <div className={classes.price}>${totalPrice.toFixed(2)}</div>
-      <button>Items</button>
-    </div>
-  </li>
-}
+  const itemsRow = cartItems.map(cartItem => (
+    <tr key={cartItem.itemId}>
+      <td data-label="Item ID">{cartItem.itemId}</td>
+      <td data-label="Title">{cartItem.itemName}</td>
+      <td data-label="Price">{cartItem.itemPrice}</td>
+      <td data-label="Quantity">{cartItem.itemQuantity}</td>
+      <td data-label="Total Price">{cartItem.itemPrice * cartItem.itemQuantity}</td>
+    </tr>
+  ));
 
-<<<<<<< HEAD:src/components/Dashboard/Order.js
-export default Order;
-=======
   return (
     <React.Fragment>
       <li className={classes.order}>
@@ -69,4 +68,3 @@ export default Order;
 };
 
 export default Order;
->>>>>>> Development:src/components/Dashboard/Admin/Order.js

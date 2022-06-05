@@ -29,18 +29,6 @@ const authSlice = createSlice({
       state.userLoggedIn = !!state.userToken;
     },
 
-<<<<<<< HEAD
-    login(state, action) {
-        state.token = action.payload;
-        localStorage.setItem('token', state.token);
-    },
-
-    logout(state) {
-        state.token = '';
-        localStorage.removeItem('token');
-        state.totalOrderedPrice= 0;
-        state.totalOrderedAmount= 0;
-=======
     isAdminLoggedIn(state) {
       state.adminLoggedIn = !!state.adminToken;
     },
@@ -77,7 +65,6 @@ const authSlice = createSlice({
       state.userEmail = action.payload.email;
       localStorage.setItem('userName', state.userName);
       localStorage.setItem('userEmail', state.userEmail);
->>>>>>> Development
     },
 
     setError(state, action) {

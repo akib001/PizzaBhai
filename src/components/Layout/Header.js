@@ -7,23 +7,6 @@ import { authActions } from '../../store/auth-slice';
 import { useNavigate } from 'react-router-dom';
 import { uiActions } from '../../store/ui-slice';
 
-<<<<<<< HEAD
-const Header = (props) => {
-  const isLoggedIn = useSelector(state => state.auth.token);
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
-
-  const logoutHandler = () => {
-    dispatch(authActions.logout());
-  }
-
-  const loginhandler = () => {
-    navigate('/auth')
-  }
-
-  const homeHandler = () => {
-    navigate('/');
-=======
 const Header = props => {
   const isAdminLoggedIn = useSelector(state => state.auth.adminToken);
   const isUserLoggedIn = useSelector(state => state.auth.userToken);
@@ -72,17 +55,11 @@ const Header = props => {
 
   if (!isUserLoggedIn && !isAdminLoggedIn) {
     buttonContent = <button onClick={() => dispatch(uiActions.toggleShowAuthHandler())}>Login</button>;
->>>>>>> Development
   }
 
   return (
     <Fragment>
       <header className={classes.header}>
-<<<<<<< HEAD
-        <h1 onClick={homeHandler}>ReactMeals</h1>
-        {isLoggedIn ? <button onClick={logoutHandler}>Logout</button> : <button onClick={loginhandler}>Login</button>}
-        <HeaderCartButton onClick={props.onShowCart} />
-=======
         {pathname !== '/' ? (
           <button onClick={homeHandler}>Home</button>
         ) : (
@@ -94,7 +71,6 @@ const Header = props => {
           className={classes.headerButton}
         />
         }
->>>>>>> Development
       </header>
       <div className={classes['main-image']}>
         <img src={mealsImage} alt='A table full of delicious food!' />
