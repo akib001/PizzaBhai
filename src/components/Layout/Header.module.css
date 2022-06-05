@@ -46,8 +46,6 @@
 .button:active {
   background-color: #2c0d00;
 }
-<<<<<<< HEAD
-=======
 
 @media screen and (max-width: 768px) {
   .header {
@@ -126,4 +124,3 @@
     }
 
   }   
->>>>>>> Development

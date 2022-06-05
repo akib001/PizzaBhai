@@ -17,8 +17,8 @@ const initialState = {
   userEmail: retrivedUserEmail,
 
   error: '',
+  totalOrderedQuantity: 0,
   totalOrderedPrice: 0,
-  totalOrderedAmount: 0
 };
 
 const authSlice = createSlice({
@@ -68,16 +68,13 @@ const authSlice = createSlice({
     },
 
     setError(state, action) {
-        state.error = action.payload;
+      state.error = action.payload;
     },
 
-    calculateTotalOrders(state, action) {
-      state.totalOrderedPrice += action.payload;
+    calculateOrderSummary(state, action) {
+      state.totalOrderedQuantity += action.payload.totalQuantity;
+      state.totalOrderedPrice += action.payload.totalPrice;
     },
-
-    calculateTotalOrderedAmount(state, action) {
-      state.totalOrderedAmount += action.payload;
-    }
   },
 });
 

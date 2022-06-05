@@ -10,6 +10,7 @@ import { uiActions } from '../../store/ui-slice';
 const Cart = props => {
   const dispatch = useDispatch();
   const stateTotalAmount = useSelector(state => state.cart.totalAmount)
+  const stateTotalQuantity = useSelector(state => state.cart.totalQuantity)
   const stateItems = useSelector(state => state.cart.items)
   const stateUserToken = useSelector(state => state.auth.userToken);
   const stateAdminToken = useSelector(state => state.auth.adminToken);
@@ -46,6 +47,8 @@ const Cart = props => {
         body: JSON.stringify({
           userData: data,
           orderData: stateItems,
+          totalOrderedPrice: stateTotalAmount,
+          totalOrderedQuantity: stateTotalQuantity
         }),
         headers: {
           Authorization: `Bearer ${stateUserToken || stateAdminToken}`,

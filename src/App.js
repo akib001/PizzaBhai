@@ -2,9 +2,6 @@ import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import React, {Suspense} from 'react';
 import Layout from './components/Layout/Layout';
-import AuthPage from './pages/AuthPage'
-import AdminDashboard from './pages/AdminDashboard';
-
 import { Route, Routes } from 'react-router-dom';
 import HomePage from './pages/HomePage';
 import {Navigate} from 'react-router-dom';
@@ -54,13 +51,15 @@ function App() {
 
   return (
     <Layout>
-      <Routes>
+      <Suspense fallback={<p>Loading..</p>}>
+        <Routes>
         <Route path="/" element={<HomePage />}/>
         {/* <Route path="/auth" element={<AuthPage/>}/> */}
         {/* blocks pages if user isn't logged in */}
         <Route path="/admin" element={isAdminLoggedIn ? <AdminDashboard/> : <Navigate to={'/'} />}/>
         <Route path="/user" element={isUserLoggedIn ? <UserDashboard/> : <Navigate to={'/'} />}/>
       </Routes>
+      </Suspense>      
     </Layout>
   );
 }

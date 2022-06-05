@@ -13,9 +13,9 @@ const MealItem = props => {
       cartActions.addToCart({
         id: props.id,
         title: props.title,
-        quantity: props.quantity,
+        quantity: amount,
         price: props.price,
-        totalPrice: props.totalPrice,
+        totalPrice: props.price,
       })
     );
   };
