@@ -24,7 +24,7 @@ const MealItem = props => {
     <li className={classes.meal}>
       <div className={classes['meal-info']}>
         <div className={classes['food-image']}>
-        <img src={`https://pizzabhai-server.herokuapp.com/${props.imageUrl}`} alt="" />
+        <img src={`http://localhost:8080/${props.imageUrl}`} alt="" />
         </div>
       <div>
         <h3>{props.title}</h3>

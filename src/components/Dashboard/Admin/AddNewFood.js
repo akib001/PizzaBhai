@@ -3,6 +3,13 @@ import classes from './AddNewFood.module.css';
 import useInput from '../../../hooks/use-input';
 import { useSelector } from 'react-redux';
 import { useRef } from 'react';
+import {
+  ref,
+  uploadBytes,
+  getDownloadURL
+} from 'firebase/storage';
+import { storage } from '../../../Firebase/firebase';
+import { v4 } from 'uuid';
 
 function AddNewFood(props) {
   const fileInputRef = useRef(null);
@@ -49,18 +56,25 @@ function AddNewFood(props) {
       return;
     }
 
-    let formData = new FormData();
-    // multer image name should be same as this
-    formData.append('title', enteredTitle);
-    formData.append('image', selectedFile);
-    formData.append('price', +enteredPrice);
-    formData.append('description', enteredDescription);
+    if (selectedFile == null) return;
+    const dynamicImageName = `pizzaBhaiImage/${selectedFile.name + v4()}`;
+    const imageRef = ref(storage, dynamicImageName);
 
-    await fetch('https://pizzabhai-server.herokuapp.com/meals/add-meal', {
+    const snapshot = await uploadBytes(imageRef, selectedFile)
+    const url = await getDownloadURL(snapshot.ref)
+
+    await fetch('http://localhost:8080/meals/add-meal', {
       method: 'POST',
-      body: formData,
+      body: JSON.stringify({
+        title: enteredTitle,
+        imageUrl: url,
+        fileName: dynamicImageName,
+        price: enteredPrice,
+        description: enteredDescription
+      }), 
       headers: {
         Authorization: `Bearer ${stateAdminToken}`,
+        'Content-Type': 'application/json'
       },
     });
 

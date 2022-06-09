@@ -16,7 +16,7 @@ const ShowMeals = () => {
       setIsLoading(true);
       console.log('Rerendered ' + stateRenderMealList)
       try {
-        const response = await fetch('https://pizzabhai-server.herokuapp.com/meals/fetch-meals');
+        const response = await fetch('http://localhost:8080/meals/fetch-meals');
 
         if (!response.ok) {
           throw new Error('Something went wrong');
