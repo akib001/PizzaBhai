@@ -8,6 +8,7 @@ const initialCartSlice = {
     id: '',
     title: '',
     imageUrl: '',
+    fileName: '',
     price: '',
     description: '',
     adminId: '', 

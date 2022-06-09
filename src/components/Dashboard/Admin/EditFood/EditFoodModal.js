@@ -3,13 +3,20 @@ import classes from './EditFoodModal.module.css';
 import Modal from '../../../UI/Modal'
 import { useSelector, useDispatch } from 'react-redux';
 import { uiActions } from '../../../../store/ui-slice';
+import {
+  ref,
+  uploadBytes,
+  getDownloadURL
+} from 'firebase/storage';
+import { storage } from '../../../../Firebase/firebase';
+import { v4 } from 'uuid';
 
 function EditFoodModal(props) {
   const dispatch = useDispatch();
 
   const stateAdminToken = useSelector((state) => state.auth.adminToken);
   const stateEditFormData = useSelector(state => state.ui.editFormData);
-  const [selectedFile, setSelectedFile] = useState(null);
+  // const [selectedFile, setSelectedFile] = useState(null);
 
   // TODO: A component is changing a controlled input to be uncontrolled.
   const inputChangeHandler = e => {
@@ -19,24 +26,55 @@ function EditFoodModal(props) {
     }))
   }
 
+  // TODO: When Update Food button is pressed too quickly image upload fails. Cause it takes time to upload image on firebase. 
+  const imageUploadHandler = async (e) => {
+    const selectedFile = e.target.files[0];
+
+    const dynamicImageName = `pizzaBhaiImage/${selectedFile.name + v4()}`;
+    const imageRef = ref(storage, dynamicImageName);
+
+    const snapshot = await uploadBytes(imageRef, selectedFile)
+    const url = await getDownloadURL(snapshot.ref)
+
+    dispatch(uiActions.updateEditFormData({
+      type: 'imageUrl',
+      newData: url
+    }))
+
+    dispatch(uiActions.updateEditFormData({
+      type: 'fileName',
+      newData: dynamicImageName
+    }))
+  }
+
   const submitHandler = async (submitData) => {
     submitData.preventDefault();
 
-    console.log(selectedFile);
-    let formData = new FormData();
-    // multer image name should be same as this
-    formData.append('title', stateEditFormData.title);
-    formData.append('image', selectedFile);
-    formData.append('price', +stateEditFormData.price);
-    formData.append('description', stateEditFormData.description);
-    formData.append('adminId', stateEditFormData.adminId);
-    formData.append('id', stateEditFormData.id);
+    
+
+    // let formData = new FormData();
+    // // multer image name should be same as this
+    // formData.append('title', stateEditFormData.title);
+    // formData.append('image', selectedFile);
+    // formData.append('price', +stateEditFormData.price);
+    // formData.append('description', stateEditFormData.description);
+    // formData.append('adminId', stateEditFormData.adminId);
+    // formData.append('id', stateEditFormData.id);
 
     await fetch(`http://localhost:8080/meals/update-meal/${stateEditFormData.id}`, {
       method: 'PUT',
-      body: formData,
+      body: JSON.stringify({
+        title: stateEditFormData.title,
+        imageUrl: stateEditFormData.imageUrl,
+        fileName: stateEditFormData.fileName,
+        price: stateEditFormData.price,
+        description: stateEditFormData.description,
+        adminId: stateEditFormData.adminId,
+        id: stateEditFormData.id
+      }),
       headers: {
         Authorization: `Bearer ${stateAdminToken}`,
+        'Content-Type': 'application/json'
       },
     });
 
@@ -65,7 +103,7 @@ function EditFoodModal(props) {
           <input
             type="file"
             id="file"
-            onChange={(e) => setSelectedFile(e.target.files[0])}
+            onChange={imageUploadHandler}
           /> 
         </div>
         <div className={classes.control}>
