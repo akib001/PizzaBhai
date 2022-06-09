@@ -61,7 +61,7 @@ function EditFoodModal(props) {
     // formData.append('adminId', stateEditFormData.adminId);
     // formData.append('id', stateEditFormData.id);
 
-    await fetch(`http://localhost:8080/meals/update-meal/${stateEditFormData.id}`, {
+    await fetch(`https://pizzabhai-server.herokuapp.com/meals/update-meal/${stateEditFormData.id}`, {
       method: 'PUT',
       body: JSON.stringify({
         title: stateEditFormData.title,

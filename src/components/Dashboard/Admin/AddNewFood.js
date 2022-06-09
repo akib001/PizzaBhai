@@ -63,7 +63,7 @@ function AddNewFood(props) {
     const snapshot = await uploadBytes(imageRef, selectedFile)
     const url = await getDownloadURL(snapshot.ref)
 
-    await fetch('http://localhost:8080/meals/add-meal', {
+    await fetch('https://pizzabhai-server.herokuapp.com/meals/add-meal', {
       method: 'POST',
       body: JSON.stringify({
         title: enteredTitle,

@@ -41,7 +41,7 @@ const Cart = props => {
   const submitDataHandler = async data => {
     setIsLoading(true);
     await fetch(
-      'http://localhost:8080/orders/create-order',
+      'https://pizzabhai-server.herokuapp.com/orders/create-order',
       {
         method: 'POST',
         body: JSON.stringify({
