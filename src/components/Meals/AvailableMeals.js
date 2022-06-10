@@ -14,7 +14,6 @@ const AvailableMeals = () => {
       setIsLoading(true);
       try {
         const response = await fetch('https://pizzabhai-server.herokuapp.com/meals/fetch-meals');
-
         if (!response.ok) {
           throw new Error('Something went wrong');
         }
