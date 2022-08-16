@@ -107,14 +107,23 @@ const AuthModal = (props) => {
         }
       })
       .then((data) => {
+        console.log(data);
         if (isAdminMode) {
+          if(!data.token) {
+            setIsLogin(false);
+            return
+          }
           dispatch(authActions.adminLogin(data.token));
           dispatch(uiActions.toggleShowAuthHandler())
           navigate('/admin');
         } else {
+          if(!data.token) {
+            setIsLogin(false);
+            return
+          }
           dispatch(authActions.userLogin(data.token));
           dispatch(
-            authActions.setUserProfile({ name: 'User', email: data.email })
+            authActions.setUserProfile({ name: data.name, email: data.email })
           );
           dispatch(uiActions.toggleShowAuthHandler())
           navigate('/user');
