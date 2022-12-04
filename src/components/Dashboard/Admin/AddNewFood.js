@@ -63,7 +63,7 @@ function AddNewFood(props) {
     const snapshot = await uploadBytes(imageRef, selectedFile)
     const url = await getDownloadURL(snapshot.ref)
 
-    await fetch('https://pizzabhai-server.herokuapp.com/meals/add-meal', {
+    await fetch('https://pizzabhai.cyclic.app/meals/add-meal', {
       method: 'POST',
       body: JSON.stringify({
         title: enteredTitle,
@@ -71,7 +71,7 @@ function AddNewFood(props) {
         fileName: dynamicImageName,
         price: enteredPrice,
         description: enteredDescription
-      }), 
+      }),
       headers: {
         Authorization: `Bearer ${stateAdminToken}`,
         'Content-Type': 'application/json'

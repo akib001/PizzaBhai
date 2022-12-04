@@ -16,7 +16,7 @@ const ShowMeals = () => {
       setIsLoading(true);
       console.log('Rerendered ' + stateRenderMealList)
       try {
-        const response = await fetch('https://pizzabhai-server.herokuapp.com/meals/fetch-meals');
+        const response = await fetch('https://pizzabhai.cyclic.app/meals/fetch-meals');
 
         if (!response.ok) {
           throw new Error('Something went wrong');
@@ -24,7 +24,7 @@ const ShowMeals = () => {
         const data = await response.json();
 
         let loadedMeals = [];
-        
+
         for (const key in data) {
           for (const item in data[key]) {
             // console.log(data[key][item])

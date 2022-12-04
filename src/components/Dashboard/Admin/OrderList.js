@@ -18,7 +18,7 @@ const OrderList = () => {
       setIsLoading(true);
       try {
         const response = await fetch(
-          'https://pizzabhai-server.herokuapp.com/orders/fetch-orders',
+          'https://pizzabhai.cyclic.app/orders/fetch-orders',
           {
             headers: {
               Authorization: `Bearer ${stateAdminToken}`,

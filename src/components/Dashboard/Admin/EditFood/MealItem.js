@@ -22,7 +22,7 @@ const MealItem = (props) => {
   };
 
   const deleteMealHandler = async () => {
-    await fetch(`https://pizzabhai-server.herokuapp.com/meals/delete-meal/${props.id}`, {
+    await fetch(`https://pizzabhai.cyclic.app/meals/delete-meal/${props.id}`, {
       method: 'PUT',
       headers: {
         Authorization: `Bearer ${stateAdminToken}`,

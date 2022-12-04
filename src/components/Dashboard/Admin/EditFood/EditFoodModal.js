@@ -50,7 +50,7 @@ function EditFoodModal(props) {
   const submitHandler = async (submitData) => {
     submitData.preventDefault();
 
-    
+
 
     // let formData = new FormData();
     // // multer image name should be same as this
@@ -61,7 +61,7 @@ function EditFoodModal(props) {
     // formData.append('adminId', stateEditFormData.adminId);
     // formData.append('id', stateEditFormData.id);
 
-    await fetch(`https://pizzabhai-server.herokuapp.com/meals/update-meal/${stateEditFormData.id}`, {
+    await fetch(`https://pizzabhai.cyclic.app/meals/update-meal/${stateEditFormData.id}`, {
       method: 'PUT',
       body: JSON.stringify({
         title: stateEditFormData.title,
@@ -104,7 +104,7 @@ function EditFoodModal(props) {
             type="file"
             id="file"
             onChange={imageUploadHandler}
-          /> 
+          />
         </div>
         <div className={classes.control}>
           <label htmlFor="price">Price</label>
@@ -118,7 +118,7 @@ function EditFoodModal(props) {
             max="10000"
             step="1"
           />
-        
+
         </div>
 
         <div className={classes.control}>
@@ -131,7 +131,7 @@ function EditFoodModal(props) {
             max="500"
             onChange={inputChangeHandler}
             value={stateEditFormData.description}
-          ></textarea>  
+          ></textarea>
         </div>
         <div className={classes.actions}>
           <button className={classes.submit} type="submit">

@@ -1,4 +1,4 @@
-import React, {  useState } from 'react';
+import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { cartActions } from '../../store/cart-slice';
 import Modal from '../UI/Modal';
@@ -41,7 +41,7 @@ const Cart = props => {
   const submitDataHandler = async data => {
     setIsLoading(true);
     await fetch(
-      'https://pizzabhai-server.herokuapp.com/orders/create-order',
+      'https://pizzabhai.cyclic.app/orders/create-order',
       {
         method: 'POST',
         body: JSON.stringify({
@@ -83,7 +83,7 @@ const Cart = props => {
       <button className={classes['button--alt']} onClick={hideCartHandler}>
         Close
       </button>
-      {(hasItems && (stateUserToken || stateAdminToken))  && (
+      {(hasItems && (stateUserToken || stateAdminToken)) && (
         <button className={classes.button} onClick={checkoutHandler}>
           Order
         </button>

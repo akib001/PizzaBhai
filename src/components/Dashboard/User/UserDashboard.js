@@ -21,7 +21,7 @@ function UserDashboard() {
       setIsLoading(true);
       try {
         const response = await fetch(
-          'https://pizzabhai-server.herokuapp.com/orders/fetch-orders',
+          'https://pizzabhai.cyclic.app/orders/fetch-orders',
           {
             headers: {
               Authorization: `Bearer ${stateUserToken}`,
@@ -72,15 +72,15 @@ function UserDashboard() {
 
   const userOrdersList = orders.map(order => (
     <UserOrder
-    key={order.id}
-    id={order.id}
-    name={order.name}
-    email={order.email}
-    phone={order.phone}
-    street={order.street}
-    city={order.city}
-    postal={order.postal}
-    items={order.items}
+      key={order.id}
+      id={order.id}
+      name={order.name}
+      email={order.email}
+      phone={order.phone}
+      street={order.street}
+      city={order.city}
+      postal={order.postal}
+      items={order.items}
     />
   ))
 
@@ -98,7 +98,7 @@ function UserDashboard() {
 
   if (isLoading) {
     content = <h2 className={classes.loading}>Loading...</h2>;
-  } 
+  }
 
   return (
     <React.Fragment>

@@ -13,14 +13,14 @@ const AvailableMeals = () => {
       setIsError(null);
       setIsLoading(true);
       try {
-        const response = await fetch('https://pizzabhai-server.herokuapp.com/meals/fetch-meals');
+        const response = await fetch('https://pizzabhai.cyclic.app/meals/fetch-meals');
         if (!response.ok) {
           throw new Error('Something went wrong');
         }
         const data = await response.json();
 
         let loadedMeals = [];
-        
+
         for (const key in data) {
           for (const item in data[key]) {
             // console.log(data[key][item])

@@ -39,8 +39,8 @@ const AuthModal = (props) => {
     // User Login
     if (isLogin && !isAdminMode) {
       url =
-        'https://pizzabhai-server.herokuapp.com/auth/user/login';
-      method = 'POST';  
+        'https://pizzabhai.cyclic.app/auth/user/login';
+      method = 'POST';
       bodyContent = {
         email,
         password
@@ -50,8 +50,8 @@ const AuthModal = (props) => {
     // User Signup
     if (!isLogin && !isAdminMode) {
       url =
-        'https://pizzabhai-server.herokuapp.com/auth/user/signup';
-        method = 'PUT';    
+        'https://pizzabhai.cyclic.app/auth/user/signup';
+      method = 'PUT';
       bodyContent = {
         name,
         email,
@@ -63,8 +63,8 @@ const AuthModal = (props) => {
     // Admin Login
     if (isLogin && isAdminMode) {
       url =
-        'https://pizzabhai-server.herokuapp.com/auth/admin/login';
-      method = 'POST';  
+        'https://pizzabhai.cyclic.app/auth/admin/login';
+      method = 'POST';
       bodyContent = {
         email,
         password
@@ -75,8 +75,8 @@ const AuthModal = (props) => {
     if (!isLogin && isAdminMode) {
       console.log('Admin Signup')
       url =
-        'https://pizzabhai-server.herokuapp.com/auth/admin/signup';
-        method = 'PUT';    
+        'https://pizzabhai.cyclic.app/auth/admin/signup';
+      method = 'PUT';
       bodyContent = {
         name,
         email,
@@ -92,7 +92,7 @@ const AuthModal = (props) => {
       },
       body: JSON.stringify(bodyContent),
     })
-    .then((response) => {
+      .then((response) => {
         setIsLoading(false);
         if (response.ok) {
           return response.json();
@@ -109,7 +109,7 @@ const AuthModal = (props) => {
       .then((data) => {
         console.log(data);
         if (isAdminMode) {
-          if(!data.token) {
+          if (!data.token) {
             setIsLogin(false);
             return
           }
@@ -117,7 +117,7 @@ const AuthModal = (props) => {
           dispatch(uiActions.toggleShowAuthHandler())
           navigate('/admin');
         } else {
-          if(!data.token) {
+          if (!data.token) {
             setIsLogin(false);
             return
           }
@@ -172,13 +172,13 @@ const AuthModal = (props) => {
       <form onSubmit={submitHandler}>
         <div className={classes.control}>
           {!isLogin && <><label htmlFor="name">First Name</label>
-          <input
-            onFocus={focusHandler}
-            type="text"
-            id="name"
-            required
-            ref={enteredNameRef}
-          /></>}
+            <input
+              onFocus={focusHandler}
+              type="text"
+              id="name"
+              required
+              ref={enteredNameRef}
+            /></>}
           <label htmlFor="email">Your Email</label>
           <input
             onFocus={focusHandler}
